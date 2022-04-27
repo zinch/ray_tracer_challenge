@@ -24,4 +24,8 @@ public final class Vector extends Tuple {
     public Vector times(double scalar) {
         return new Vector(scalar * x, scalar * y, scalar * z);
     }
+
+    public Vector divide(double scalar) {
+        return new Vector(x / scalar, y / scalar, z / scalar);
+    }
 }

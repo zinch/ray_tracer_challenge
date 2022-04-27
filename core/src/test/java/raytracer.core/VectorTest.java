@@ -48,4 +48,10 @@ class VectorTest {
         var v = vector(1, -2, 3);
         assertThat(v.times(0.5)).isEqualTo(vector(0.5, -1, 1.5));
     }
+
+    @Test
+    void divide_by_scalar() {
+        var v = vector(1, -2, 3);
+        assertThat(v.divide(2)).isEqualTo(vector(0.5, -1, 1.5));
+    }
 }
