@@ -48,8 +48,12 @@ public class Tuple {
 
     public Tuple plus(Tuple o) {
         double w = this.w + o.w;
-        if (w > 1.0) throw new IllegalOperation();
+        if (w < 0 || w > 1.0) throw new IllegalOperation();
         return new Tuple(x + o.x, y + o.y, z + o.z, w);
+    }
+
+    public Tuple minus(Tuple o) {
+        return plus(new Tuple(-o.x, -o.y, -o.z, -o.w));
     }
 
     public static final class IllegalOperation extends RuntimeException {

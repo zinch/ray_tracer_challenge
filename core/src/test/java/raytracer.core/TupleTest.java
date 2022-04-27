@@ -38,4 +38,32 @@ public class TupleTest {
         var y = Tuple.newPoint(1, 2, 3);
         assertThatThrownBy(() -> x.plus(y)).isInstanceOf(Tuple.IllegalOperation.class);
     }
+
+    @Test
+    void subtracting_two_points() {
+        var p1 = Tuple.newPoint(3, 2, 1);
+        var p2 = Tuple.newPoint(5, 6, 7);
+        assertThat(p1.minus(p2)).isEqualTo(Tuple.newVector(-2, -4, -6));
+    }
+
+    @Test
+    void subtracting_vector_from_a_point() {
+        var p = Tuple.newPoint(3, 2, 1);
+        var v = Tuple.newVector(5, 6, 7);
+        assertThat(p.minus(v)).isEqualTo(Tuple.newPoint(-2, -4, -6));
+    }
+
+    @Test
+    void subtracting_two_vectors() {
+        var v1 = Tuple.newVector(3, 2, 1);
+        var v2 = Tuple.newVector(5, 6, 7);
+        assertThat(v1.minus(v2)).isEqualTo(Tuple.newVector(-2, -4, -6));
+    }
+
+    @Test
+    void prevent_subtracting_point_from_a_vector() {
+        var p = Tuple.newPoint(1, 2, 3);
+        var v = Tuple.newVector(1, 0, 0);
+        assertThatThrownBy(() -> v.minus(p)).isInstanceOf(Tuple.IllegalOperation.class);
+    }
 }
