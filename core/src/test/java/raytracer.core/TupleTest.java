@@ -14,7 +14,7 @@ public class TupleTest {
         assertThat(t.y).isEqualTo(-4.2);
         assertThat(t.z).isEqualTo(3.1);
         assertThat(t.w).isEqualTo(1.0);
-        assertThat(t).isEqualTo(new Tuple(4.3, -4.2, 3.1, 1.0));
+        assertThat(t).isEqualTo(new Point(4.3, -4.2, 3.1));
     }
 
     @Test
@@ -24,21 +24,14 @@ public class TupleTest {
         assertThat(t.y).isEqualTo(-4.2);
         assertThat(t.z).isEqualTo(3.1);
         assertThat(t.w).isEqualTo(0.0);
-        assertThat(t).isEqualTo(new Tuple(4.3, -4.2, 3.1, 0.0));
+        assertThat(t).isEqualTo(new Vector(4.3, -4.2, 3.1));
     }
 
     @Test
     void adding_two_tuples() {
         var x = point(3, -2, 5);
         var y = vector(-2, 3, 1);
-        assertThat(x.plus(y)).isEqualTo(new Tuple(1, 1, 6, 1));
-    }
-
-    @Test
-    void prevent_adding_two_points() {
-        var x = point(1, 2, 3);
-        var y = point(1, 2, 3);
-        assertThatThrownBy(() -> x.plus(y)).isInstanceOf(Tuple.IllegalOperation.class);
+        assertThat(x.plus(y)).isEqualTo(new Point(1, 1, 6));
     }
 
     @Test
@@ -60,12 +53,5 @@ public class TupleTest {
         var v1 = vector(3, 2, 1);
         var v2 = vector(5, 6, 7);
         assertThat(v1.minus(v2)).isEqualTo(vector(-2, -4, -6));
-    }
-
-    @Test
-    void prevent_subtracting_point_from_a_vector() {
-        var p = point(1, 2, 3);
-        var v = vector(1, 0, 0);
-        assertThatThrownBy(() -> v.minus(p)).isInstanceOf(Tuple.IllegalOperation.class);
     }
 }

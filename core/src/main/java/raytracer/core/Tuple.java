@@ -4,7 +4,7 @@ import raytracer.utils.MathUtils;
 
 import java.util.Objects;
 
-public class Tuple {
+public sealed class Tuple permits Point, Vector {
     public final double x;
     public final double y;
     public final double z;
@@ -17,12 +17,12 @@ public class Tuple {
         this.w = w;
     }
 
-    public static Tuple point(double x, double y, double z) {
-        return new Tuple(x, y, z, 1.0);
+    public static Point point(double x, double y, double z) {
+        return new Point(x, y, z);
     }
 
-    public static Tuple vector(double x, double y, double z) {
-        return new Tuple(x, y, z, 0.0);
+    public static Vector vector(double x, double y, double z) {
+        return new Vector(x, y, z);
     }
 
     @Override
@@ -44,16 +44,6 @@ public class Tuple {
     @Override
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ", " + w + ')';
-    }
-
-    public Tuple plus(Tuple o) {
-        double w = this.w + o.w;
-        if (w < 0 || w > 1.0) throw new IllegalOperation();
-        return new Tuple(x + o.x, y + o.y, z + o.z, w);
-    }
-
-    public Tuple minus(Tuple o) {
-        return plus(new Tuple(-o.x, -o.y, -o.z, -o.w));
     }
 
     public static final class IllegalOperation extends RuntimeException {
