@@ -32,4 +32,9 @@ public final class Vector extends Tuple {
     public double magnitude() {
         return Math.sqrt(x * x + y * y + z * z);
     }
+
+    public Vector normalize() {
+        var m = magnitude();
+        return new Vector(x / m, y / m, z / m);
+    }
 }

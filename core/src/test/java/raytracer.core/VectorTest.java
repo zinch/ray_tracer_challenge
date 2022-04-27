@@ -62,18 +62,32 @@ class VectorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("sampleVectors")
+    @MethodSource("vectorsWithDifferentMagnitude")
     void compute_magnitude(Vector v, double expectedMagnitude) {
         assertThat(v.magnitude()).isEqualTo(expectedMagnitude);
     }
 
-    static Stream<Arguments> sampleVectors() {
+    static Stream<Arguments> vectorsWithDifferentMagnitude() {
         return Stream.of(
                 Arguments.of(vector(1, 0, 0), 1.0),
                 Arguments.of(vector(0, 1, 0), 1.0),
                 Arguments.of(vector(0, 0, 1), 1.0),
                 Arguments.of(vector(1, 2, 3), Math.sqrt(14)),
                 Arguments.of(vector(-1, -2, -3), Math.sqrt(14))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("vectorsForNormalization")
+    void normalize(Vector v, Vector normalized) {
+        assertThat(v.normalize()).isEqualTo(normalized);
+        assertThat(v.normalize().magnitude()).isEqualTo(1.0);
+    }
+
+    static Stream<Arguments> vectorsForNormalization() {
+        return Stream.of(
+                Arguments.of(vector(4, 0, 0), vector(1, 0, 0)),
+                Arguments.of(vector(1, 2, 3), vector(0.26726, 0.53452, 0.80178))
         );
     }
 }
