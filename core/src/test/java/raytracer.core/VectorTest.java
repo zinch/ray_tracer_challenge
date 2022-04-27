@@ -1,6 +1,12 @@
 package raytracer.core;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.Tuple.vector;
@@ -53,5 +59,21 @@ class VectorTest {
     void divide_by_scalar() {
         var v = vector(1, -2, 3);
         assertThat(v.divide(2)).isEqualTo(vector(0.5, -1, 1.5));
+    }
+
+    @ParameterizedTest
+    @MethodSource("sampleVectors")
+    void compute_magnitude(Vector v, double expectedMagnitude) {
+        assertThat(v.magnitude()).isEqualTo(expectedMagnitude);
+    }
+
+    static Stream<Arguments> sampleVectors() {
+        return Stream.of(
+                Arguments.of(vector(1, 0, 0), 1.0),
+                Arguments.of(vector(0, 1, 0), 1.0),
+                Arguments.of(vector(0, 0, 1), 1.0),
+                Arguments.of(vector(1, 2, 3), Math.sqrt(14)),
+                Arguments.of(vector(-1, -2, -3), Math.sqrt(14))
+        );
     }
 }

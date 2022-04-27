@@ -28,4 +28,8 @@ public final class Vector extends Tuple {
     public Vector divide(double scalar) {
         return new Vector(x / scalar, y / scalar, z / scalar);
     }
+
+    public double magnitude() {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
 }
