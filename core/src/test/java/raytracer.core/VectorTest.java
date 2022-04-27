@@ -36,4 +36,16 @@ class VectorTest {
         var v = vector(1, -2, 3);
         assertThat(v.negate()).isEqualTo(vector(-1, 2, -3));
     }
+
+    @Test
+    void multiply_by_scalar() {
+        var v = vector(1, -2, 3);
+        assertThat(v.times(3.5)).isEqualTo(vector(3.5, -7.0, 10.5));
+    }
+
+    @Test
+    void multiply_by_fraction() {
+        var v = vector(1, -2, 3);
+        assertThat(v.times(0.5)).isEqualTo(vector(0.5, -1, 1.5));
+    }
 }

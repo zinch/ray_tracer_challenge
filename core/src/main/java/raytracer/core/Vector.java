@@ -20,4 +20,8 @@ public final class Vector extends Tuple {
     public Vector negate() {
         return new Vector(-x, -y, -z);
     }
+
+    public Vector times(double scalar) {
+        return new Vector(scalar * x, scalar * y, scalar * z);
+    }
 }
