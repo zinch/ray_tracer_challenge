@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -96,5 +95,13 @@ class VectorTest {
         var v1 = vector(1, 2, 3);
         var v2 = vector(2, 3, 4);
         assertThat(v1.dot(v2)).isEqualTo(20);
+    }
+
+    @Test
+    void cross_product() {
+        var v1 = vector(1, 2, 3);
+        var v2 = vector(2, 3, 4);
+        assertThat(v1.cross(v2)).isEqualTo(vector(-1, 2, -1));
+        assertThat(v2.cross(v1)).isEqualTo(vector(1, -2, 1));
     }
 }
