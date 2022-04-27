@@ -37,4 +37,8 @@ public final class Vector extends Tuple {
         var m = magnitude();
         return new Vector(x / m, y / m, z / m);
     }
+
+    public double dot(Vector v) {
+        return x * v.x + y * v.y + z * v.z;
+    }
 }

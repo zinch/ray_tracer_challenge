@@ -90,4 +90,11 @@ class VectorTest {
                 Arguments.of(vector(1, 2, 3), vector(0.26726, 0.53452, 0.80178))
         );
     }
+
+    @Test
+    void dot_product() {
+        var v1 = vector(1, 2, 3);
+        var v2 = vector(2, 3, 4);
+        assertThat(v1.dot(v2)).isEqualTo(20);
+    }
 }
