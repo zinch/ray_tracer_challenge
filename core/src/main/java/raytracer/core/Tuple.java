@@ -45,7 +45,4 @@ public sealed class Tuple permits Point, Vector {
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ", " + w + ')';
     }
-
-    public static final class IllegalOperation extends RuntimeException {
-    }
 }
