@@ -1,12 +1,15 @@
 package raytracer.core;
 
+import raytracer.utils.MathUtils;
+import java.util.Objects;
+
 public class Tuple {
     public final double x;
     public final double y;
     public final double z;
     public final double w;
 
-    private Tuple(double x, double y, double z, double w) {
+    Tuple(double x, double y, double z, double w) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -19,5 +22,26 @@ public class Tuple {
 
     public static Tuple newVector(double x, double y, double z) {
         return new Tuple(x, y, z, 0.0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tuple tuple = (Tuple) o;
+        return MathUtils.areEqual(tuple.x, x) &&
+                MathUtils.areEqual(tuple.y, y) &&
+                MathUtils.areEqual(tuple.z, z) &&
+                Double.compare(tuple.w, w) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z, w);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ", " + z + ", " + w + ')';
     }
 }

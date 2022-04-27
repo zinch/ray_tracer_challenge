@@ -12,6 +12,7 @@ public class TupleTest {
         assertThat(t.y).isEqualTo(-4.2);
         assertThat(t.z).isEqualTo(3.1);
         assertThat(t.w).isEqualTo(1.0);
+        assertThat(t).isEqualTo(new Tuple(4.3, -4.2, 3.1, 1.0));
     }
 
     @Test
@@ -21,5 +22,6 @@ public class TupleTest {
         assertThat(t.y).isEqualTo(-4.2);
         assertThat(t.z).isEqualTo(3.1);
         assertThat(t.w).isEqualTo(0.0);
+        assertThat(t).isEqualTo(new Tuple(4.3, -4.2, 3.1, 0.0));
     }
 }
