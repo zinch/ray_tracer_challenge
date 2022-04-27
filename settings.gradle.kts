@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "ray_tracer_challenge"
-include("app", "core")
+include("app", "core", "utils")
