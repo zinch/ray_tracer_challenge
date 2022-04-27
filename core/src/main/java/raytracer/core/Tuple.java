@@ -17,11 +17,11 @@ public class Tuple {
         this.w = w;
     }
 
-    public static Tuple newPoint(double x, double y, double z) {
+    public static Tuple point(double x, double y, double z) {
         return new Tuple(x, y, z, 1.0);
     }
 
-    public static Tuple newVector(double x, double y, double z) {
+    public static Tuple vector(double x, double y, double z) {
         return new Tuple(x, y, z, 0.0);
     }
 
