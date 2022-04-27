@@ -16,4 +16,8 @@ public final class Vector extends Tuple {
     public Vector minus(Vector v) {
         return plus(new Vector(-v.x, -v.y, -v.z));
     }
+
+    public Vector negate() {
+        return new Vector(-x, -y, -z);
+    }
 }

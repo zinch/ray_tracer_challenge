@@ -54,4 +54,10 @@ public class TupleTest {
         var v2 = vector(5, 6, 7);
         assertThat(v1.minus(v2)).isEqualTo(vector(-2, -4, -6));
     }
+
+    @Test
+    void negating_a_tuple() {
+        var v = vector(1, -2, 3);
+        assertThat(v.negate()).isEqualTo(vector(-1, 2, -3));
+    }
 }
