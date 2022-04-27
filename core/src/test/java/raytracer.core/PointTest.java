@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.*;
 import static raytracer.core.Tuple.point;
 import static raytracer.core.Tuple.vector;
 
-public class TupleTest {
+class PointTest {
     @Test
-    void newPoint_creates_a_tuple_with_w_1() {
+    void creating_a_point() {
         var t = point(4.3, -4.2, 3.1);
         assertThat(t.x).isEqualTo(4.3);
         assertThat(t.y).isEqualTo(-4.2);
@@ -18,17 +18,7 @@ public class TupleTest {
     }
 
     @Test
-    void newVector_creates_a_tuple_with_w_0() {
-        var t = vector(4.3, -4.2, 3.1);
-        assertThat(t.x).isEqualTo(4.3);
-        assertThat(t.y).isEqualTo(-4.2);
-        assertThat(t.z).isEqualTo(3.1);
-        assertThat(t.w).isEqualTo(0.0);
-        assertThat(t).isEqualTo(new Vector(4.3, -4.2, 3.1));
-    }
-
-    @Test
-    void adding_two_tuples() {
+    void adding_vector_to_a_point() {
         var x = point(3, -2, 5);
         var y = vector(-2, 3, 1);
         assertThat(x.plus(y)).isEqualTo(new Point(1, 1, 6));
@@ -46,18 +36,5 @@ public class TupleTest {
         var p = point(3, 2, 1);
         var v = vector(5, 6, 7);
         assertThat(p.minus(v)).isEqualTo(point(-2, -4, -6));
-    }
-
-    @Test
-    void subtracting_two_vectors() {
-        var v1 = vector(3, 2, 1);
-        var v2 = vector(5, 6, 7);
-        assertThat(v1.minus(v2)).isEqualTo(vector(-2, -4, -6));
-    }
-
-    @Test
-    void negating_a_tuple() {
-        var v = vector(1, -2, 3);
-        assertThat(v.negate()).isEqualTo(vector(-1, 2, -3));
     }
 }
