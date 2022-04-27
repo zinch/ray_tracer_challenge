@@ -7,6 +7,11 @@ plugins {
     `kotlin-dsl`
 }
 
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = "18" } }
+    withType<JavaCompile> { compileJava { targetCompatibility = "18" } }
+}
+
 repositories {
     // Use the plugin portal to apply community plugins in convention plugins.
     gradlePluginPortal()
