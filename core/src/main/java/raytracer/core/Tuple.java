@@ -1,6 +1,7 @@
 package raytracer.core;
 
 import raytracer.utils.MathUtils;
+
 import java.util.Objects;
 
 public class Tuple {
@@ -43,5 +44,14 @@ public class Tuple {
     @Override
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ", " + w + ')';
+    }
+
+    public Tuple plus(Tuple o) {
+        double w = this.w + o.w;
+        if (w > 1.0) throw new IllegalOperation();
+        return new Tuple(x + o.x, y + o.y, z + o.z, w);
+    }
+
+    public static final class IllegalOperation extends RuntimeException {
     }
 }
