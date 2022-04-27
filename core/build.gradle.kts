@@ -7,4 +7,5 @@ plugins {
 }
 
 dependencies {
+    implementation("org.assertj:assertj-core:3.22.0")
 }
