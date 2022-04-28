@@ -15,7 +15,11 @@ public class Canvas {
         Arrays.fill(pixels, new Color(0, 0, 0));
     }
 
-    public Color colorAt(int x, int y) {
+    public Color pixelAt(int x, int y) {
         return pixels[x * width + y];
+    }
+
+    public void writePixelAt(Color c, int x, int y) {
+        pixels[x * width + y] = c;
     }
 }
