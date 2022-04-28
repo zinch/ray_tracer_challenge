@@ -1,7 +1,7 @@
 package raytracer.projectile;
 
-import raytracer.core.Point;
-import raytracer.core.Vector;
+import raytracer.core.geometry.Point;
+import raytracer.core.geometry.Vector;
 
 public record Projectile(Point position, Vector velocity) {
 

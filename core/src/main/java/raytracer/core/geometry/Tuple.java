@@ -1,4 +1,4 @@
-package raytracer.core;
+package raytracer.core.geometry;
 
 import raytracer.utils.MathUtils;
 

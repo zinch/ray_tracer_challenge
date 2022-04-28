@@ -1,14 +1,15 @@
-package raytracer.core;
+package raytracer.core.geometry;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import raytracer.core.geometry.Vector;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static raytracer.core.Tuple.vector;
+import static raytracer.core.geometry.Tuple.vector;
 
 class VectorTest {
 

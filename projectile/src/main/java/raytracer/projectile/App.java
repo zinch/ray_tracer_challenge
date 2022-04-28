@@ -1,7 +1,7 @@
 package raytracer.projectile;
 
-import static raytracer.core.Tuple.point;
-import static raytracer.core.Tuple.vector;
+import static raytracer.core.geometry.Tuple.point;
+import static raytracer.core.geometry.Tuple.vector;
 
 public class App {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package raytracer.core;
+package raytracer.core.geometry;
 
 public final class Vector extends Tuple {
     Vector(double x, double y, double z) {

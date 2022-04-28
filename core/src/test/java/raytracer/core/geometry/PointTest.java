@@ -1,10 +1,11 @@
-package raytracer.core;
+package raytracer.core.geometry;
 
 import org.junit.jupiter.api.Test;
+import raytracer.core.geometry.Point;
 
 import static org.assertj.core.api.Assertions.*;
-import static raytracer.core.Tuple.point;
-import static raytracer.core.Tuple.vector;
+import static raytracer.core.geometry.Tuple.point;
+import static raytracer.core.geometry.Tuple.vector;
 
 class PointTest {
     @Test

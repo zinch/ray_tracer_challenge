@@ -1,4 +1,4 @@
-package raytracer.core;
+package raytracer.core.geometry;
 
 public final class Point extends Tuple {
     Point(double x, double y, double z) {
