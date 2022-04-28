@@ -1,4 +1,4 @@
-package raytracer.core;
+package raytracer.core.graphics;
 
 import org.junit.jupiter.api.Test;
 
