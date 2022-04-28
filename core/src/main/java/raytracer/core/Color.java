@@ -1,14 +1,8 @@
 package raytracer.core;
 
-public final class Color {
-    private final double red;
-    private final double green;
-    private final double blue;
-
+public final class Color extends Tuple {
     private Color(double red, double green, double blue) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        super(red, green, blue, 0);
     }
 
     public static Color rgb(double red, double green, double blue) {
@@ -16,14 +10,23 @@ public final class Color {
     }
 
     public double red() {
-        return red;
+        return x;
     }
 
     public double green() {
-        return green;
+        return y;
     }
 
     public double blue() {
-        return blue;
+        return z;
+    }
+
+    public Color plus(Color c) {
+        return new Color(x + c.x, y + c.y, z + c.z);
+    }
+
+    @Override
+    public String toString() {
+        return "rgb(" + x + ", " + y + ", " + z + ")";
     }
 }

@@ -13,4 +13,11 @@ class ColorTest {
         assertThat(c.green()).isEqualTo(0.4);
         assertThat(c.blue()).isEqualTo(0.7);
     }
+
+    @Test
+    void adding_colors() {
+        var c1 = Color.rgb(0.9, 0.6, 0.75);
+        var c2 = Color.rgb(0.7, 0.1, 0.25);
+        assertThat(c1.plus(c2)).isEqualTo(Color.rgb(1.6, 0.7, 1.0));
+    }
 }
