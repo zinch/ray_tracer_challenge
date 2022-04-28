@@ -25,6 +25,10 @@ public final class Color extends Tuple {
         return new Color(x + c.x, y + c.y, z + c.z);
     }
 
+    public Color minus(Color c) {
+        return new Color(x - c.x, y - c.y, z - c.z);
+    }
+
     @Override
     public String toString() {
         return "rgb(" + x + ", " + y + ", " + z + ")";
