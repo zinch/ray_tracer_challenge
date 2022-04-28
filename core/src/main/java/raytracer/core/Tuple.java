@@ -4,7 +4,7 @@ import raytracer.utils.MathUtils;
 
 import java.util.Objects;
 
-public sealed class Tuple permits Color, Point, Vector {
+public sealed class Tuple permits Point, Vector {
     public final double x;
     public final double y;
     public final double z;
