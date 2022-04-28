@@ -16,10 +16,14 @@ public class Canvas {
     }
 
     public Color pixelAt(int x, int y) {
-        return pixels[x * width + y];
+        return pixels[idx(x, y)];
     }
 
     public void writePixelAt(Color c, int x, int y) {
-        pixels[x * width + y] = c;
+        pixels[idx(x, y)] = c;
+    }
+
+    private int idx(int x, int y) {
+        return x * width + y;
     }
 }
