@@ -3,7 +3,6 @@ package raytracer.core;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ColorTest {
     @Test
@@ -32,5 +31,12 @@ class ColorTest {
     void multiply_color_by_scalar() {
         var c = Color.rgb(0.2, 0.3, 0.4);
         assertThat(c.times(2)).isEqualTo(Color.rgb(0.4, 0.6, 0.8));
+    }
+
+    @Test
+    void multiply_two_colors() {
+        var c1 = Color.rgb(1, 0.2, 0.4);
+        var c2 = Color.rgb(0.9, 1, 0.1);
+        assertThat(c1.times(c2)).isEqualTo(Color.rgb(0.9, 0.2, 0.04));
     }
 }
