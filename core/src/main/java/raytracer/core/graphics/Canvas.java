@@ -24,6 +24,6 @@ public class Canvas {
     }
 
     private int idx(int x, int y) {
-        return x * width + y;
+        return x + width * y;
     }
 }
