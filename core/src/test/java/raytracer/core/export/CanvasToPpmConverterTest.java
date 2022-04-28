@@ -53,4 +53,10 @@ class CanvasToPpmConverterTest {
         assertThat(lines[5]).isEqualTo("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
         assertThat(lines[6]).isEqualTo("153 255 204 153 255 204 153 255 204 153 255 204 153");
     }
+
+    @Test
+    void ppm_files_are_terminated_by_a_newline_character() {
+        var ppm = CanvasToPpmConverter.convert(canvas);
+        assertThat(String.valueOf(ppm.charAt(ppm.length() - 1))).isEqualTo(System.getProperty("line.separator"));
+    }
 }
