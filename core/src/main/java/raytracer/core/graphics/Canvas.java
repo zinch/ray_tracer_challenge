@@ -12,7 +12,7 @@ public class Canvas {
         this.width = width;
         this.height = height;
         this.pixels = new Color[width * height];
-        Arrays.fill(pixels, new Color(0, 0, 0));
+        fill(new Color(0, 0, 0));
     }
 
     public Color pixelAt(int x, int y) {
@@ -25,5 +25,9 @@ public class Canvas {
 
     private int idx(int x, int y) {
         return x + width * y;
+    }
+
+    public void fill(Color color) {
+        Arrays.fill(pixels, color);
     }
 }

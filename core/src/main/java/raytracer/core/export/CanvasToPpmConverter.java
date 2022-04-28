@@ -3,10 +3,9 @@ package raytracer.core.export;
 import raytracer.core.graphics.Canvas;
 import raytracer.core.graphics.Color;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class CanvasToPpmConverter {
+    private final static int MAX_LINE_WIDTH = 70;
+
     private CanvasToPpmConverter() {
     }
 
@@ -15,24 +14,35 @@ public class CanvasToPpmConverter {
         var sb = new StringBuilder("P3").append(newLine)
                 .append(c.width).append(" ").append(c.height).append(newLine)
                 .append("255").append(newLine);
-        for (int j = 0; j < c.height; j++) {
-            final int y = j;
-            var canvasLine = IntStream.range(0, c.width)
-                    .mapToObj(x -> c.pixelAt(x, y))
-                    .map(CanvasToPpmConverter::rgb)
-                    .collect(Collectors.joining(" "));
-            sb.append(canvasLine).append(newLine);
+        for (int y = 0; y < c.height; y++) {
+            var line = new StringBuilder(MAX_LINE_WIDTH);
+            for (int x = 0; x < c.width; x++) {
+                var color = c.pixelAt(x, y);
+                for (var colorComponent : rgbComponents(color)) {
+                    if (line.length() + colorComponent.length() + 1 > MAX_LINE_WIDTH) {
+                        sb.append(line).append(newLine);
+                        line = new StringBuilder(MAX_LINE_WIDTH);
+                        line.append(colorComponent);
+                    } else {
+                        if (line.length() > 0) {
+                            line.append(" ");
+                        }
+                        line.append(colorComponent);
+                    }
+                }
+            }
+            sb.append(line).append(newLine);
         }
         return sb.toString();
     }
 
-    private static String rgb(Color c) {
-        return normalize(c.red()) + " " + normalize(c.green()) + " " + normalize(c.blue());
+    private static String[] rgbComponents(Color c) {
+        return new String[]{normalize(c.red()), normalize(c.green()), normalize(c.blue())};
     }
 
-    private static int normalize(double originalValue) {
+    private static String normalize(double originalValue) {
         int value = (int) Math.ceil(originalValue * 255);
-        if (value > 255) return 255;
-        return Math.max(value, 0);
+        if (value > 255) return "255";
+        return String.valueOf(Math.max(value, 0));
     }
 }

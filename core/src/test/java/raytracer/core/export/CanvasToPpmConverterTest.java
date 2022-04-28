@@ -18,10 +18,11 @@ class CanvasToPpmConverterTest {
     @Test
     void constructing_ppm_header() {
         var ppm = CanvasToPpmConverter.convert(canvas);
-        var tokens = ppm.split("\n");
-        assertThat(tokens[0]).isEqualTo("P3");
-        assertThat(tokens[1]).isEqualTo("5 3");
-        assertThat(tokens[2]).isEqualTo("255");
+
+        var lines = ppm.split("\n");
+        assertThat(lines[0]).isEqualTo("P3");
+        assertThat(lines[1]).isEqualTo("5 3");
+        assertThat(lines[2]).isEqualTo("255");
     }
 
     @Test
@@ -29,10 +30,27 @@ class CanvasToPpmConverterTest {
         canvas.writePixelAt(new Color(1.5, 0, 0), 0, 0);
         canvas.writePixelAt(new Color(0, 0.5, 0), 2, 1);
         canvas.writePixelAt(new Color(-0.5, 0, 1), 4, 2);
+
         var ppm = CanvasToPpmConverter.convert(canvas);
-        var tokens = ppm.split("\n");
-        assertThat(tokens[3]).isEqualTo("255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
-        assertThat(tokens[4]).isEqualTo("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
-        assertThat(tokens[5]).isEqualTo("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
+
+        var lines = ppm.split("\n");
+        assertThat(lines[3]).isEqualTo("255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
+        assertThat(lines[4]).isEqualTo("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
+        assertThat(lines[5]).isEqualTo("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
+    }
+
+    @Test
+    void splitting_long_lines_in_ppm_files() {
+        var canvas = new Canvas(10, 2);
+        var color = new Color(1, 0.8, 0.6);
+        canvas.fill(color);
+
+        var ppm = CanvasToPpmConverter.convert(canvas);
+
+        var lines = ppm.split("\n");
+        assertThat(lines[3]).isEqualTo("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+        assertThat(lines[4]).isEqualTo("153 255 204 153 255 204 153 255 204 153 255 204 153");
+        assertThat(lines[5]).isEqualTo("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+        assertThat(lines[6]).isEqualTo("153 255 204 153 255 204 153 255 204 153 255 204 153");
     }
 }
