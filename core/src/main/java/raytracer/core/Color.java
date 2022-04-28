@@ -29,6 +29,10 @@ public final class Color extends Tuple {
         return new Color(x - c.x, y - c.y, z - c.z);
     }
 
+    public Color times(double scalar) {
+        return new Color(x * scalar, y * scalar, z * scalar);
+    }
+
     @Override
     public String toString() {
         return "rgb(" + x + ", " + y + ", " + z + ")";

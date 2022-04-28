@@ -27,4 +27,10 @@ class ColorTest {
         var c2 = Color.rgb(0.7, 0.1, 0.25);
         assertThat(c1.minus(c2)).isEqualTo(Color.rgb(0.2, 0.5, 0.5));
     }
+
+    @Test
+    void multiply_color_by_scalar() {
+        var c = Color.rgb(0.2, 0.3, 0.4);
+        assertThat(c.times(2)).isEqualTo(Color.rgb(0.4, 0.6, 0.8));
+    }
 }
