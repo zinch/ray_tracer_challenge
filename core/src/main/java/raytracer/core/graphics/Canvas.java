@@ -3,8 +3,8 @@ package raytracer.core.graphics;
 import java.util.Arrays;
 
 public class Canvas {
-    final int width;
-    final int height;
+    public final int width;
+    public final int height;
 
     final Color[] pixels;
 
