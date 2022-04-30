@@ -360,4 +360,22 @@ class MatrixTest {
                 {0.17778, 0.06667, -0.26667, 0.33333}
         }));
     }
+
+    @Test
+    void multiplying_a_product_by_its_inverse() {
+        var A = new Matrix(new double[][]{
+                {3, -9, 7, 3},
+                {3, -8, 2, -9},
+                {-4, 4, 4, 1},
+                {-6, 5, -1, 1}
+        });
+        var B = new Matrix(new double[][]{
+                {8, 2, 2, 2},
+                {3, -1, 7, 0},
+                {7, 0, 5, 4},
+                {6, -2, 0, 5}
+        });
+        var C = A.times(B);
+        assertThat(C.times(B.inverse())).isEqualTo(A);
+    }
 }
