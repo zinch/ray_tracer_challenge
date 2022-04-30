@@ -157,6 +157,15 @@ public record Matrix(double[][] values) {
     }
 
     public double determinant() {
-        return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+        var M = getRowsCount(values);
+        if (M == 2) {
+            return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+        }
+
+        var det = 0.0;
+        for (int j = 0; j < M; j++) {
+            det += at(0, j) * cofactor(0, j);
+        }
+        return det;
     }
 }
