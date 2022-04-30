@@ -4,19 +4,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MatrixTest {
+
+    private final double[][] matrixValues4x4 = new double[][]{
+            {1, 2, 3, 4},
+            {5.5, 6.5, 7.5, 8.5},
+            {9, 10, 11, 12},
+            {13.5, 14.5, 15.5, 16.5}
+    };
+
     @Test
     void constructing_4x4_matrix() {
-        double[][] values = {
-                {1, 2, 3, 4},
-                {5.5, 6.5, 7.5, 8.5},
-                {9, 10, 11, 12},
-                {13.5, 14.5, 15.5, 16.5}
-        };
-        var matrix = new Matrix(values);
+        var matrix = new Matrix(matrixValues4x4);
 
-        values[1][1] = 100.5;
+        matrixValues4x4[1][1] = 100.5;
         assertThat(matrix.at(1, 1)).isEqualTo(6.5);
         assertThat(matrix.at(0, 0)).isEqualTo(1);
         assertThat(matrix.at(0, 3)).isEqualTo(4);
@@ -58,5 +61,12 @@ class MatrixTest {
                         {3, 4},
                         {5, 6}
                 })).isInstanceOf(IllegalArgumentException.class).hasMessage("Must provide a square matrix!");
+    }
+
+    @Test
+    void matrix_equality() {
+        var m1 = new Matrix(matrixValues4x4);
+        var m2 = new Matrix(matrixValues4x4);
+        assertTrue(m1.equals(m2));
     }
 }
