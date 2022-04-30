@@ -279,4 +279,53 @@ class MatrixTest {
         assertThat(m.cofactor(0, 3)).isEqualTo(51);
         assertThat(m.determinant()).isEqualTo(-4071);
     }
+
+    @Test
+    void testing_an_invertible_matrix_for_invertibility() {
+        var m = new Matrix(new double[][]{
+                {6, 4, 4, 4},
+                {5, 5, 7, 6},
+                {4, -9, 3, -7},
+                {9, 1, 7, -6}
+        });
+        assertThat(m.determinant()).isEqualTo(-2120);
+        assertThat(m.isInvertible()).isTrue();
+    }
+
+    @Test
+    void testing_a_noninvertible_matrix_for_invertibility() {
+        var m = new Matrix(new double[][]{
+                {-4, 2, -2, -3},
+                {9, 6, 2, 6},
+                {0, -5, 1, -5},
+                {0, 0, 0, 0}
+        });
+        assertThat(m.determinant()).isEqualTo(0);
+        assertThat(m.isInvertible()).isFalse();
+    }
+
+    @Test
+    void calculating_the_inverse_of_a_matrix() {
+        var m = new Matrix(new double[][]{
+                {-5, 2, 6, -8},
+                {1, -5, 1, 8},
+                {7, 7, -6, -7},
+                {1, -3, 7, 4}
+        });
+        assertThat(m.determinant()).isEqualTo(532);
+        assertThat(m.cofactor(2, 3)).isEqualTo(-160);
+
+        var inverse = m.inverse();
+        assertThat(inverse.at(3, 2)).isEqualTo(-160.0 / 532);
+
+        assertThat(m.cofactor(3, 2)).isEqualTo(105);
+        assertThat(inverse.at(2, 3)).isEqualTo(105.0 / 532);
+
+        assertThat(inverse).isEqualTo(new Matrix(new double[][]{
+                {0.21805, 0.45113, 0.24060, -0.04511},
+                {-0.80827, -1.45677, -0.44361, 0.52068},
+                {-0.07895, -0.22368, -0.05263, 0.19737},
+                {-0.52256, -0.81391, -0.30075, 0.30639}
+        }));
+    }
 }
