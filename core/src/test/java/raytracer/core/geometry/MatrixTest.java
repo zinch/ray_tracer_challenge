@@ -1,5 +1,6 @@
 package raytracer.core.geometry;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,16 +10,22 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
 
-    private final double[][] matrixValues4x4 = new double[][]{
-            {1, 2, 3, 4},
-            {5.5, 6.5, 7.5, 8.5},
-            {9, 10, 11, 12},
-            {13.5, 14.5, 15.5, 16.5}
-    };
+    private double[][] matrixValues4x4;
+
+    @BeforeEach
+    void setUp() {
+        matrixValues4x4 =
+                new double[][]{
+                        {1, 2, 3, 4},
+                        {5.5, 6.5, 7.5, 8.5},
+                        {9, 10, 11, 12},
+                        {13.5, 14.5, 15.5, 16.5}
+                };
+    }
 
     @Test
     void constructing_4x4_matrix() {
@@ -77,6 +84,14 @@ class MatrixTest {
     void matrix_equality() {
         var m1 = new Matrix(matrixValues4x4);
         var m2 = new Matrix(matrixValues4x4);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
+    }
+
+    @Test
+    void matrix_inequality() {
+        var m1 = new Matrix(matrixValues4x4);
+        matrixValues4x4[2][2] += 0.01;
+        var m2 = new Matrix(matrixValues4x4);
+        assertNotEquals(m1, m2);
     }
 }
