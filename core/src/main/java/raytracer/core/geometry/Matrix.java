@@ -146,4 +146,8 @@ public record Matrix(double[][] values) {
         }
         return new Matrix(submatrix);
     }
+
+    public double determinant() {
+        return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+    }
 }

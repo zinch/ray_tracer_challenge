@@ -218,4 +218,14 @@ class MatrixTest {
                 {-7, -1, 1}
         }));
     }
+
+    @Test
+    void calculating_determinant_of_2x2_matrix() {
+        var m = new Matrix(new double[][]{
+                {1, 5},
+                {-3, 2}
+        });
+
+        assertThat(m.determinant()).isEqualTo(17);
+    }
 }
