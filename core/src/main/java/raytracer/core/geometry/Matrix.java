@@ -128,6 +128,11 @@ public record Matrix(double[][] values) {
         return new Matrix(transposed);
     }
 
+    public double cofactor(int i, int j) {
+        var sign = (i + j) % 2 == 0 ? 1 : -1;
+        return sign * minor(i, j);
+    }
+
     public double minor(int i, int j) {
         return submatrix(i, j).determinant();
     }

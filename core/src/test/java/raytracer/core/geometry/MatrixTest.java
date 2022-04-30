@@ -238,4 +238,18 @@ class MatrixTest {
         });
         assertThat(m.minor(1, 0)).isEqualTo(25);
     }
+
+    @Test
+    void calculating_a_cofactor_of_a_3x3_matrix() {
+        var m = new Matrix(new double[][]{
+                {3, 5, 0},
+                {2, -1, -7},
+                {6, -1, 5}
+        });
+        assertThat(m.minor(0, 0)).isEqualTo(-12);
+        assertThat(m.cofactor(0, 0)).isEqualTo(-12);
+        assertThat(m.minor(1, 0)).isEqualTo(25);
+        assertThat(m.cofactor(1, 0)).isEqualTo(-25);
+
+    }
 }
