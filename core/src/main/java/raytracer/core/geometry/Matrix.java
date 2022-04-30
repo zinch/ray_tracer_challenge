@@ -68,17 +68,6 @@ public record Matrix(double[][] values) {
         return new Point(x, y, z);
     }
 
-    public Matrix times(double c) {
-        var M = getRowsCount(values);
-        var copy = new double[M][M];
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < M; j++) {
-                copy[i][j] = c * at(i, j);
-            }
-        }
-        return new Matrix(copy);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -194,9 +183,9 @@ public record Matrix(double[][] values) {
 
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < M; j++) {
-                cofactorMatrixValues[i][j] = cofactor(i, j);
+                cofactorMatrixValues[j][i] = cofactor(i, j) / det;
             }
         }
-        return new Matrix(cofactorMatrixValues).transpose().times(1 / det);
+        return new Matrix(cofactorMatrixValues);
     }
 }
