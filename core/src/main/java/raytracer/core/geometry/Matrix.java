@@ -116,4 +116,15 @@ public record Matrix(double[][] values) {
     private int getColumnsCount(double[][] values) {
         return values[0].length;
     }
+
+    public Matrix transpose() {
+        var M = getRowsCount(values);
+        var transposed = new double[M][M];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < M; j++) {
+                transposed[i][j] = at(j, i);
+            }
+        }
+        return new Matrix(transposed);
+    }
 }
