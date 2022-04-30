@@ -94,4 +94,44 @@ class MatrixTest {
         var m2 = new Matrix(matrixValues4x4);
         assertNotEquals(m1, m2);
     }
+
+    @Test
+    void multiplying_two_2x2_matrices() {
+        var m1 = new Matrix(new double[][]{
+                {1, 2},
+                {3, 4}
+        });
+        var m2 = new Matrix(new double[][]{
+                {-2, 1},
+                {1.5, -0.5}
+        });
+
+        assertThat(m1.times(m2)).isEqualTo(new Matrix(new double[][]{
+                {1, 0},
+                {0, 1}
+        }));
+    }
+
+    @Test
+    void multiplying_two_4x4_matrices() {
+        var m1 = new Matrix(new double[][]{
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 8, 7, 6},
+                {5, 4, 3, 2}
+        });
+        var m2 = new Matrix(new double[][]{
+                {-2, 1, 2, 3},
+                {3, 2, 1, -1},
+                {4, 3, 6, 5},
+                {1, 2, 7, 8}
+        });
+
+        assertThat(m1.times(m2)).isEqualTo(new Matrix(new double[][]{
+                {20, 22, 50, 48},
+                {44, 54, 114, 108},
+                {40, 58, 110, 102},
+                {16, 26, 46, 42}
+        }));
+    }
 }
