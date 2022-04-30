@@ -184,6 +184,10 @@ class MatrixTest {
                 {3, 0, 5, 5},
                 {0, 8, 3, 8}
         }));
+    }
 
+    @Test
+    void transposing_identity_matrix() {
+        assertThat(new Matrix(identityMatrix4x4).transpose()).isEqualTo(new Matrix(identityMatrix4x4));
     }
 }
