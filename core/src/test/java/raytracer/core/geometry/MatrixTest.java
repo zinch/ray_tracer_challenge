@@ -190,4 +190,32 @@ class MatrixTest {
     void transposing_identity_matrix() {
         assertThat(new Matrix(identityMatrix4x4).transpose()).isEqualTo(new Matrix(identityMatrix4x4));
     }
+
+    @Test
+    void submatrix_of_a_3x3_matrix_is_a_2x2_matrix() {
+        var m = new Matrix(new double[][]{
+                {1, 5, 0},
+                {-3, 2, 7},
+                {0, 6, -3}
+        });
+        assertThat(m.submatrix(0, 2)).isEqualTo(new Matrix(new double[][]{
+                {-3, 2},
+                {0, 6}
+        }));
+    }
+
+    @Test
+    void submatrix_of_a_4x4_matrix_is_a_3x3_matrix() {
+        var m = new Matrix(new double[][]{
+                {-6, 1, 1, 6},
+                {-8, 5, 8, 6},
+                {-1, 0, 8, 2},
+                {-7, 1, -1, 1}
+        });
+        assertThat(m.submatrix(2, 1)).isEqualTo(new Matrix(new double[][]{
+                {-6, 1, 6},
+                {-8, 8, 6},
+                {-7, -1, 1}
+        }));
+    }
 }

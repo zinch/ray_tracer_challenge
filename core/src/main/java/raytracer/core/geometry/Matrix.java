@@ -127,4 +127,23 @@ public record Matrix(double[][] values) {
         }
         return new Matrix(transposed);
     }
+
+    public Matrix submatrix(int row, int col) {
+        var M = getRowsCount(values);
+        var submatrix = new double[M - 1][M - 1];
+        for (int i = 0, k = 0; i < M; i++) {
+            if (i == row) {
+                continue;
+            }
+            for (int j = 0, v = 0; j < M; j++) {
+                if (j == col) {
+                    continue;
+                }
+                submatrix[k][v] = at(i, j);
+                v++;
+            }
+            k++;
+        }
+        return new Matrix(submatrix);
+    }
 }
