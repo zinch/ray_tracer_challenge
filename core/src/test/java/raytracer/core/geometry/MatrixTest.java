@@ -16,6 +16,7 @@ import static raytracer.core.geometry.Tuple.point;
 class MatrixTest {
 
     private double[][] matrixValues4x4;
+    private double[][] identityMatrix4x4;
 
     @BeforeEach
     void setUp() {
@@ -26,6 +27,12 @@ class MatrixTest {
                         {9, 10, 11, 12},
                         {13.5, 14.5, 15.5, 16.5}
                 };
+        identityMatrix4x4 = new double[][]{
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        };
     }
 
     @Test
@@ -137,7 +144,7 @@ class MatrixTest {
     }
 
     @Test
-    void multiply_matrix_by_a_tuple() {
+    void multiply_matrix_by_a_point() {
         var m = new Matrix(new double[][]{
                 {1, 2, 3, 4},
                 {2, 4, 4, 2},
@@ -147,5 +154,19 @@ class MatrixTest {
 
         var p = point(1, 2, 3);
         assertThat(m.times(p)).isEqualTo(point(18, 24, 33));
+    }
+
+    @Test
+    void multiplying_matrix_by_identity_matrix() {
+        var m = new Matrix(matrixValues4x4);
+        var identity = new Matrix(identityMatrix4x4);
+        assertThat(m.times(identity)).isEqualTo(new Matrix(matrixValues4x4));
+    }
+
+    @Test
+    void multiplying_point_by_identity_matrix() {
+        var p = point(1, 2, 3);
+        var identity = new Matrix(identityMatrix4x4);
+        assertThat(identity.times(p)).isEqualTo(point(1, 2, 3));
     }
 }
