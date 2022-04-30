@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static raytracer.core.geometry.Tuple.point;
 
 class MatrixTest {
 
@@ -133,5 +134,18 @@ class MatrixTest {
                 {40, 58, 110, 102},
                 {16, 26, 46, 42}
         }));
+    }
+
+    @Test
+    void multiply_matrix_by_a_tuple() {
+        var m = new Matrix(new double[][]{
+                {1, 2, 3, 4},
+                {2, 4, 4, 2},
+                {8, 6, 4, 1},
+                {0, 0, 0, 1}
+        });
+
+        var p = point(1, 2, 3);
+        assertThat(m.times(p)).isEqualTo(point(18, 24, 33));
     }
 }

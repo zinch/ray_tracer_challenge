@@ -51,6 +51,23 @@ public record Matrix(double[][] values) {
         return new Matrix(result);
     }
 
+    public Point times(Point p) {
+        double x = 0;
+        double y = 0;
+        double z = 0;
+        var M = getRowsCount(values);
+        if (M != 4) {
+            throw new IllegalArgumentException("Can only multiply tuples with 4x4 matrices!");
+        }
+        double[] tuple = {p.x, p.y, p.z, p.w};
+        for (int j = 0; j < M; j++) {
+            x += at(0, j) * tuple[j];
+            y += at(1, j) * tuple[j];
+            z += at(2, j) * tuple[j];
+        }
+        return new Point(x, y, z);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
