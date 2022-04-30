@@ -1,6 +1,11 @@
 package raytracer.core.geometry;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -53,14 +58,19 @@ class MatrixTest {
         assertThat(matrix.at(2, 2)).isEqualTo(-1);
     }
 
-    @Test
-    void allow_only_square_matrices() {
+    @ParameterizedTest
+    @MethodSource("invalidMatrixValues")
+    void allow_only_square_matrices(double[][] values) {
         assertThatThrownBy(() ->
-                new Matrix(new double[][]{
-                        {1, 2},
-                        {3, 4},
-                        {5, 6}
-                })).isInstanceOf(IllegalArgumentException.class).hasMessage("Must provide a square matrix!");
+                new Matrix(values)).isInstanceOf(IllegalArgumentException.class).hasMessage("Must provide a square matrix!");
+    }
+
+    static Stream<Arguments> invalidMatrixValues() {
+        return Stream.of(
+                Arguments.of((Object) new double[][]{}),
+                Arguments.of((Object) new double[][]{{1, 2}, {3, 4}, {5, 6}}),
+                Arguments.of((Object) new double[][]{{1, 2, 10}, {3, 4}, {5, 6}})
+        );
     }
 
     @Test
