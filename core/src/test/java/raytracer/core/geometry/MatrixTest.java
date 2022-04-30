@@ -228,4 +228,14 @@ class MatrixTest {
 
         assertThat(m.determinant()).isEqualTo(17);
     }
+
+    @Test
+    void calculating_a_minor_of_a_3x3_matrix() {
+        var m = new Matrix(new double[][]{
+                {3, 5, 0},
+                {2, -1, -7},
+                {6, -1, 5}
+        });
+        assertThat(m.minor(1, 0)).isEqualTo(25);
+    }
 }

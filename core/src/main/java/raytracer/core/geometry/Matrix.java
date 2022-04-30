@@ -128,6 +128,10 @@ public record Matrix(double[][] values) {
         return new Matrix(transposed);
     }
 
+    public double minor(int i, int j) {
+        return submatrix(i, j).determinant();
+    }
+
     public Matrix submatrix(int row, int col) {
         var M = getRowsCount(values);
         var submatrix = new double[M - 1][M - 1];
