@@ -43,6 +43,15 @@ public record Matrix(double[][] values) {
         });
     }
 
+    public static Matrix rotationZ(double r) {
+        return new Matrix(new double[][]{
+                {cos(r), -sin(r), 0, 0},
+                {sin(r), cos(r), 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        });
+    }
+
     public Matrix(double[][] values) {
         validate(values);
         var M = getRowsCount(values);

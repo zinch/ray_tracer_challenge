@@ -80,4 +80,13 @@ public class MatrixTransformationsTest {
         assertThat(halfQuarter.times(p)).isEqualTo(point(Math.sqrt(2) / 2, 0, Math.sqrt(2) / 2));
         assertThat(fullQuarter.times(p)).isEqualTo(point(1, 0, 0));
     }
+
+    @Test
+    void rotating_a_point_around_the_z_axis() {
+        var p = point(0, 1, 0);
+        var halfQuarter = Matrix.rotationZ(Math.PI / 4);
+        var fullQuarter = Matrix.rotationZ(Math.PI / 2);
+        assertThat(halfQuarter.times(p)).isEqualTo(point(-Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0));
+        assertThat(fullQuarter.times(p)).isEqualTo(point(-1, 0, 0));
+    }
 }
