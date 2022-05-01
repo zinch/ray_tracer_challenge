@@ -47,4 +47,11 @@ public class MatrixTransformationsTest {
         var v = vector(-4, 6, 8);
         assertThat(inv.times(v)).isEqualTo(vector(-2, 2, 2));
     }
+
+    @Test
+    void reflection_is_scaling_by_a_negative_value() {
+        var reflection = Matrix.scaling(-1, 1, 1);
+        var p = point(2, 3, 4);
+        assertThat(reflection.times(p)).isEqualTo(point(-2, 3, 4));
+    }
 }
