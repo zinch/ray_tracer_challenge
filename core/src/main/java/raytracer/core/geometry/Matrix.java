@@ -5,6 +5,15 @@ import raytracer.utils.MathUtils;
 import java.util.Arrays;
 
 public record Matrix(double[][] values) {
+    public static Matrix translation(int x, int y, int z) {
+        return new Matrix(new double[][]{
+                {1, 0, 0, x},
+                {0, 1, 0, y},
+                {0, 0, 1, z},
+                {0, 0, 0, 1}
+        });
+    }
+
     public Matrix(double[][] values) {
         validate(values);
         var M = getRowsCount(values);
