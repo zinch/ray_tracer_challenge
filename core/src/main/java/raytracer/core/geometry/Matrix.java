@@ -52,6 +52,58 @@ public record Matrix(double[][] values) {
         });
     }
 
+    public static ShearingBuilder shearingBuilder() {
+        return new ShearingBuilder();
+    }
+
+    public static final class ShearingBuilder {
+        private double xPerY = 0;
+        private double xPerZ = 0;
+        private double yPerX = 0;
+        private double yPerZ = 0;
+        private double zPerX = 0;
+        private double zPerY = 0;
+
+        public Matrix build() {
+            return new Matrix(new double[][]{
+                    {1, xPerY, xPerZ, 0},
+                    {yPerX, 1, yPerZ, 0},
+                    {zPerX, zPerY, 1, 0},
+                    {0, 0, 0, 1}
+            });
+        }
+
+        public ShearingBuilder xPerY(double value) {
+            xPerY = value;
+            return this;
+        }
+
+        public ShearingBuilder xPerZ(double value) {
+            xPerZ = value;
+            return this;
+        }
+
+        public ShearingBuilder yPerX(double value) {
+            yPerX = value;
+            return this;
+        }
+
+        public ShearingBuilder yPerZ(double value) {
+            yPerZ = value;
+            return this;
+        }
+
+        public ShearingBuilder zPerX(double value) {
+            zPerX = value;
+            return this;
+        }
+
+        public ShearingBuilder zPerY(double value) {
+            zPerY = value;
+            return this;
+        }
+    }
+
     public Matrix(double[][] values) {
         validate(values);
         var M = getRowsCount(values);

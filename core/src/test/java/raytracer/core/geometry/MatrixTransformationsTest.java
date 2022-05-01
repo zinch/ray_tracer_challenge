@@ -89,4 +89,43 @@ public class MatrixTransformationsTest {
         assertThat(halfQuarter.times(p)).isEqualTo(point(-Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0));
         assertThat(fullQuarter.times(p)).isEqualTo(point(-1, 0, 0));
     }
+
+    @Test
+    void shearing_transformation_moves_x_in_proportion_to_y() {
+        var transform = Matrix.shearingBuilder().xPerY(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(5, 3, 4));
+    }
+
+    @Test
+    void shearing_transformation_moves_x_in_proportion_to_z() {
+        var transform = Matrix.shearingBuilder().xPerZ(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(6, 3, 4));
+    }
+
+    @Test
+    void shearing_transformation_moves_y_in_proportion_to_x() {
+        var transform = Matrix.shearingBuilder().yPerX(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(2, 5, 4));
+    }
+    @Test
+    void shearing_transformation_moves_y_in_proportion_to_z() {
+        var transform = Matrix.shearingBuilder().yPerZ(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(2, 7, 4));
+    }
+    @Test
+    void shearing_transformation_moves_z_in_proportion_to_x() {
+        var transform = Matrix.shearingBuilder().zPerX(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(2, 3, 6));
+    }
+    @Test
+    void shearing_transformation_moves_z_in_proportion_to_y() {
+        var transform = Matrix.shearingBuilder().zPerY(1).build();
+        var p = point(2, 3, 4);
+        assertThat(transform.times(p)).isEqualTo(point(2, 3, 7));
+    }
 }
