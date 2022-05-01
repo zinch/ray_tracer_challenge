@@ -56,7 +56,7 @@ public class MatrixTransformationsTest {
     }
 
     @Test
-    void rotating_a_point_around_x_axis() {
+    void rotating_a_point_around_the_x_axis() {
         var p = point(0, 1, 0);
         var halfQuarter = Matrix.rotationX(Math.PI / 4);
         var fullQuarter = Matrix.rotationX(Math.PI / 2);
@@ -70,5 +70,14 @@ public class MatrixTransformationsTest {
         var halfQuarter = Matrix.rotationX(Math.PI / 4);
         var inv = halfQuarter.inverse();
         assertThat(inv.times(p)).isEqualTo(point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
+    }
+
+    @Test
+    void rotating_a_point_around_the_y_axis() {
+        var p = point(0, 0, 1);
+        var halfQuarter = Matrix.rotationY(Math.PI / 4);
+        var fullQuarter = Matrix.rotationY(Math.PI / 2);
+        assertThat(halfQuarter.times(p)).isEqualTo(point(Math.sqrt(2) / 2, 0, Math.sqrt(2) / 2));
+        assertThat(fullQuarter.times(p)).isEqualTo(point(1, 0, 0));
     }
 }
