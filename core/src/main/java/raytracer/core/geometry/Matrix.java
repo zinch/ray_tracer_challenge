@@ -14,6 +14,15 @@ public record Matrix(double[][] values) {
         });
     }
 
+    public static Matrix scaling(int x, int y, int z) {
+        return new Matrix(new double[][]{
+                {x, 0, 0, 0},
+                {0, y, 0, 0},
+                {0, 0, z, 0},
+                {0, 0, 0, 1}
+        });
+    }
+
     public Matrix(double[][] values) {
         validate(values);
         var M = getRowsCount(values);
