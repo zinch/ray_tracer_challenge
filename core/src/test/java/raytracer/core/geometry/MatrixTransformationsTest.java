@@ -54,4 +54,21 @@ public class MatrixTransformationsTest {
         var p = point(2, 3, 4);
         assertThat(reflection.times(p)).isEqualTo(point(-2, 3, 4));
     }
+
+    @Test
+    void rotating_a_point_around_x_axis() {
+        var p = point(0, 1, 0);
+        var halfQuarter = Matrix.rotationX(Math.PI / 4);
+        var fullQuarter = Matrix.rotationX(Math.PI / 2);
+        assertThat(halfQuarter.times(p)).isEqualTo(point(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+        assertThat(fullQuarter.times(p)).isEqualTo(point(0, 0, 1));
+    }
+
+    @Test
+    void inverse_of_an_x_rotating_matrix_rotates_in_an_opposite_direction() {
+        var p = point(0, 1, 0);
+        var halfQuarter = Matrix.rotationX(Math.PI / 4);
+        var inv = halfQuarter.inverse();
+        assertThat(inv.times(p)).isEqualTo(point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
+    }
 }

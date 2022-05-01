@@ -4,6 +4,8 @@ import raytracer.utils.MathUtils;
 
 import java.util.Arrays;
 
+import static java.lang.Math.*;
+
 public record Matrix(double[][] values) {
     public static Matrix translation(int x, int y, int z) {
         return new Matrix(new double[][]{
@@ -19,6 +21,15 @@ public record Matrix(double[][] values) {
                 {x, 0, 0, 0},
                 {0, y, 0, 0},
                 {0, 0, z, 0},
+                {0, 0, 0, 1}
+        });
+    }
+
+    public static Matrix rotationX(double r) {
+        return new Matrix(new double[][]{
+                {1, 0, 0, 0},
+                {0, cos(r), -sin(r), 0},
+                {0, sin(r), cos(r), 0},
                 {0, 0, 0, 1}
         });
     }
