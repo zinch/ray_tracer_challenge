@@ -1,14 +1,17 @@
 package raytracer.core.geometry;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static raytracer.core.geometry.Matrix.*;
 import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 public class MatrixTransformationsTest {
-    private final Matrix translation = Matrix.translation(5, -3, 2);
-    private final Matrix scaling = Matrix.scaling(2, 3, 4);
+    private final Matrix translation = translation(5, -3, 2);
+    private final Matrix scaling = scaling(2, 3, 4);
 
     @Test
     void multiplying_by_a_translation_matrix() {
@@ -50,7 +53,7 @@ public class MatrixTransformationsTest {
 
     @Test
     void reflection_is_scaling_by_a_negative_value() {
-        var reflection = Matrix.scaling(-1, 1, 1);
+        var reflection = scaling(-1, 1, 1);
         var p = point(2, 3, 4);
         assertThat(reflection.times(p)).isEqualTo(point(-2, 3, 4));
     }
@@ -58,8 +61,8 @@ public class MatrixTransformationsTest {
     @Test
     void rotating_a_point_around_the_x_axis() {
         var p = point(0, 1, 0);
-        var halfQuarter = Matrix.rotationX(Math.PI / 4);
-        var fullQuarter = Matrix.rotationX(Math.PI / 2);
+        var halfQuarter = rotationX(Math.PI / 4);
+        var fullQuarter = rotationX(Math.PI / 2);
         assertThat(halfQuarter.times(p)).isEqualTo(point(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2));
         assertThat(fullQuarter.times(p)).isEqualTo(point(0, 0, 1));
     }
@@ -67,7 +70,7 @@ public class MatrixTransformationsTest {
     @Test
     void inverse_of_an_x_rotating_matrix_rotates_in_an_opposite_direction() {
         var p = point(0, 1, 0);
-        var halfQuarter = Matrix.rotationX(Math.PI / 4);
+        var halfQuarter = rotationX(Math.PI / 4);
         var inv = halfQuarter.inverse();
         assertThat(inv.times(p)).isEqualTo(point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
     }
@@ -110,22 +113,50 @@ public class MatrixTransformationsTest {
         var p = point(2, 3, 4);
         assertThat(transform.times(p)).isEqualTo(point(2, 5, 4));
     }
+
     @Test
     void shearing_transformation_moves_y_in_proportion_to_z() {
         var transform = Matrix.shearingBuilder().yPerZ(1).build();
         var p = point(2, 3, 4);
         assertThat(transform.times(p)).isEqualTo(point(2, 7, 4));
     }
+
     @Test
     void shearing_transformation_moves_z_in_proportion_to_x() {
         var transform = Matrix.shearingBuilder().zPerX(1).build();
         var p = point(2, 3, 4);
         assertThat(transform.times(p)).isEqualTo(point(2, 3, 6));
     }
+
     @Test
     void shearing_transformation_moves_z_in_proportion_to_y() {
         var transform = Matrix.shearingBuilder().zPerY(1).build();
         var p = point(2, 3, 4);
         assertThat(transform.times(p)).isEqualTo(point(2, 3, 7));
+    }
+
+    @Nested
+    @DisplayName("Multiple transformations")
+    class MultipleTransformations {
+        private final Point point = point(1, 0, 1);
+        private final Matrix A = rotationX(Math.PI / 2);
+        private final Matrix B = scaling(5, 5, 5);
+        private final Matrix C = translation(10, 5, 7);
+
+        @Test
+        void individual_transformation_are_applied_in_sequence() {
+            var p2 = A.times(point);
+            assertThat(p2).isEqualTo(point(1, -1, 0));
+            var p3 = B.times(p2);
+            assertThat(p3).isEqualTo(point(5, -5, 0));
+            var p4 = C.times(p3);
+            assertThat(p4).isEqualTo(point(15, 0, 7));
+        }
+
+        @Test
+        void chained_transformation_must_be_applied_in_reverse_order() {
+            var T = C.times(B).times(A);
+            assertThat(T.times(point)).isEqualTo(point(15, 0, 7));
+        }
     }
 }
