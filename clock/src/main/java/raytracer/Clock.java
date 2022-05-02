@@ -17,11 +17,12 @@ public class Clock {
         int height = 400;
         var canvas = new Canvas(width, height);
         var color = new Color(1, 0, 1);
-        var p = point(0, height / 4.0, 0);
+        var p = point(0, 1, 0);
         drawAxis(width, height, canvas);
         for (int i = 0; i < 12; i++) {
             var hourRotation = identity()
-                    .rotateZ(-i * Math.PI / 6);
+                    .rotateZ(-i * Math.PI / 6)
+                    .scale(height * 3.0 / 8, height * 3.0 / 8, 0);
 
             var transformed = hourRotation.times(p);
             try {
