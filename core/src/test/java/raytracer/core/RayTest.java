@@ -1,15 +1,41 @@
 package raytracer.core;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Sphere;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 class RayTest {
+
+    private Sphere sphere;
+
+    @BeforeEach
+    void setUp() {
+        sphere = new Sphere();
+    }
+
+    @Test
+    void an_intersection_encapsulates_t_and_object() {
+        var intersection = new Ray.Intersection(3.5, sphere);
+        assertThat(intersection.t).isEqualTo(3.5);
+        assertThat(intersection.object).isSameAs(sphere);
+    }
+
+    @Test
+    void aggregating_intersections() {
+        var i1 = new Ray.Intersection(1, sphere);
+        var i2 = new Ray.Intersection(2, sphere);
+
+        var xs = new Ray.Intersections(i1, i2);
+
+        assertThat(xs.count()).isEqualTo(2);
+        assertThat(xs.get(0).t).isEqualTo(1);
+        assertThat(xs.get(1).t).isEqualTo(2);
+    }
+
     @Test
     void creating_and_querying_a_ray() {
         var origin = point(1, 2, 3);
@@ -35,8 +61,11 @@ class RayTest {
 
         var intersections = ray.intersect(sphere);
 
-        assertThat(intersections).hasSize(2);
-        assertThat(Arrays.equals(new double[]{4.0, 6.0}, intersections)).isTrue();
+        assertThat(intersections.count()).isEqualTo(2);
+        assertThat(intersections.get(0).object).isSameAs(sphere);
+        assertThat(intersections.get(0).t).isEqualTo(4.0);
+        assertThat(intersections.get(1).object).isSameAs(sphere);
+        assertThat(intersections.get(1).t).isEqualTo(6.0);
     }
 
     @Test
@@ -46,8 +75,9 @@ class RayTest {
 
         var intersections = ray.intersect(sphere);
 
-        assertThat(intersections).hasSize(2);
-        assertThat(Arrays.equals(new double[]{5.0, 5.0}, intersections)).isTrue();
+        assertThat(intersections.count()).isEqualTo(2);
+        assertThat(intersections.get(0).t).isEqualTo(5.0);
+        assertThat(intersections.get(1).t).isEqualTo(5.0);
     }
 
     @Test
@@ -57,7 +87,7 @@ class RayTest {
 
         var intersections = ray.intersect(sphere);
 
-        assertThat(intersections).isEmpty();
+        assertThat(intersections.count()).isEqualTo(0);
     }
 
     @Test
@@ -67,8 +97,9 @@ class RayTest {
 
         var intersections = ray.intersect(sphere);
 
-        assertThat(intersections).hasSize(2);
-        assertThat(Arrays.equals(new double[]{-1.0, 1.0}, intersections)).isTrue();
+        assertThat(intersections.count()).isEqualTo(2);
+        assertThat(intersections.get(0).t).isEqualTo(-1.0);
+        assertThat(intersections.get(1).t).isEqualTo(1.0);
     }
 
     @Test
@@ -78,7 +109,8 @@ class RayTest {
 
         var intersections = ray.intersect(sphere);
 
-        assertThat(intersections).hasSize(2);
-        assertThat(Arrays.equals(new double[]{-6.0, -4.0}, intersections)).isTrue();
+        assertThat(intersections.count()).isEqualTo(2);
+        assertThat(intersections.get(0).t).isEqualTo(-6.0);
+        assertThat(intersections.get(1).t).isEqualTo(-4.0);
     }
 }
