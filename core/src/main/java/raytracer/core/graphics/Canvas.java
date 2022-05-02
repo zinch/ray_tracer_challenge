@@ -23,6 +23,10 @@ public class Canvas {
         pixels[idx(x, y)] = c;
     }
 
+    public void writePixelAt(Color c, double x, double y) {
+        pixels[idx((int) Math.floor(x), (int) Math.floor(y))] = c;
+    }
+
     private int idx(int x, int y) {
         return x + width * y;
     }

@@ -13,27 +13,39 @@ import static raytracer.core.geometry.Tuple.point;
 
 public class Clock {
     public static void main(String[] args) {
-        int width = 400;
-        int height = 400;
-        var canvas = new Canvas(width, height);
+        int size = 400;
+        var canvas = new Canvas(size, size);
         var color = new Color(1, 0, 1);
         var p = point(0, 1, 0);
-        drawAxis(width, height, canvas);
+        /*
+            Clock coordinate system:
+            Y
+            ^    +Z
+            |    /
+            |   /
+            |  /
+            | /
+            -----------> X
+
+            Canvas coordinate system:
+            -----------> X
+            |
+            |
+            |
+            |
+            Y
+         */
+        drawAxis(size, size, canvas);
         for (int i = 0; i < 12; i++) {
             var hourRotation = identity()
                     .rotateZ(-i * Math.PI / 6)
-                    .scale(height * 3.0 / 8, height * 3.0 / 8, 0);
+                    // Flip y, because Y points down the screen
+                    .scale(size * 3.0 / 8, -size * 3.0 / 8, 0)
+                    // Move center of the clock to the center of the canvas
+                    .translate(size / 2.0, size / 2.0, 0);
 
             var transformed = hourRotation.times(p);
-            try {
-                var x = (int) (width / 2 + transformed.x);
-                var y = (int) (height / 2 - transformed.y);
-                System.out.println("" + i + ": " + transformed + ", x=" + x + ", y=" + y);
-                canvas.writePixelAt(color, x, y);
-//                if (i >= 1) break;
-            } catch (Exception e) {
-                System.err.println("" + i + ": " + e.getMessage());
-            }
+            canvas.writePixelAt(color, transformed.x, transformed.y);
         }
         var ppm = CanvasToPpmConverter.convert(canvas);
         try {
@@ -47,10 +59,17 @@ public class Clock {
 
     private static void drawAxis(int width, int height, Canvas canvas) {
         var green = new Color(0, 1, 0.3);
+        // Center
         canvas.writePixelAt(green, width / 2, height / 2);
-        canvas.writePixelAt(green, width - 10, height / 2);
-        canvas.writePixelAt(green, 10, height / 2);
-        canvas.writePixelAt(green, width / 2, height - 10);
-        canvas.writePixelAt(green, width / 2, 10);
+        // X axis
+        for (int x = 0, step = (int) (width * 0.1); x < width; x += step) {
+            canvas.writePixelAt(green, x, height / 2);
+        }
+        canvas.writePixelAt(green, width - 1, height / 2);
+        // Y axis
+        for (int y = 0, step = (int) (height * 0.1); y < height; y += step) {
+            canvas.writePixelAt(green, width / 2, y);
+        }
+        canvas.writePixelAt(green, width / 2, height - 1);
     }
 }
