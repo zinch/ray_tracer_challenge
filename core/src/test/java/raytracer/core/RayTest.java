@@ -1,6 +1,8 @@
 package raytracer.core;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Sphere;
 
@@ -106,5 +108,36 @@ class RayTest {
         assertThat(intersections.count()).isEqualTo(2);
         assertThat(intersections.get(0).t).isEqualTo(-6.0);
         assertThat(intersections.get(1).t).isEqualTo(-4.0);
+    }
+
+    @Nested
+    @DisplayName("Hit")
+    class HitTest {
+        @Test
+        void when_all_intersections_have_positive_t() {
+            var i1 = new Ray.Intersection(1, sphere);
+            var i2 = new Ray.Intersection(2, sphere);
+            var xs = new Ray.Intersections(i1, i2);
+            var hit = xs.hit();
+            assertThat(hit).contains(i1);
+        }
+
+        @Test
+        void when_some_intersections_have_negative_t() {
+            var i1 = new Ray.Intersection(-1, sphere);
+            var i2 = new Ray.Intersection(1, sphere);
+            var xs = new Ray.Intersections(i1, i2);
+            var hit = xs.hit();
+            assertThat(hit).contains(i2);
+        }
+
+        @Test
+        void when_all_intersections_have_negative_t() {
+            var i1 = new Ray.Intersection(-2, sphere);
+            var i2 = new Ray.Intersection(-1, sphere);
+            var xs = new Ray.Intersections(i1, i2);
+            var hit = xs.hit();
+            assertThat(hit).isEmpty();
+        }
     }
 }

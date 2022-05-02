@@ -4,22 +4,33 @@ import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.geometry.Vector;
 
+import java.util.Optional;
+
 public record Ray(Point origin, Vector direction) {
 
     public static final class Intersection {
         public final double t;
         public final Object object;
 
-        public Intersection(double t, Object obj) {
+        Intersection(double t, Object obj) {
             this.t = t;
             this.object = obj;
+        }
+
+        @Override
+        public String toString() {
+            return "Intersection{" +
+                    "t=" + t +
+                    ", object=" + object +
+                    '}';
         }
     }
 
     public static final class Intersections {
         private final Intersection[] values;
 
-        public Intersections(Intersection... is) {
+        Intersections(Intersection... is) {
+            // Intersections must be sorted by increasing t
             this.values = is;
         }
 
@@ -29,6 +40,16 @@ public record Ray(Point origin, Vector direction) {
 
         public Intersection get(int index) {
             return values[index];
+        }
+
+        public Optional<Intersection> hit() {
+            var result = Optional.<Intersection>empty();
+            for (var intersection : values) {
+                if (intersection.t >= 0) {
+                    return Optional.of(intersection);
+                }
+            }
+            return result;
         }
     }
 
