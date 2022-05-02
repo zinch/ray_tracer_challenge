@@ -158,5 +158,14 @@ public class MatrixTransformationsTest {
             var T = C.times(B).times(A);
             assertThat(T.times(point)).isEqualTo(point(15, 0, 7));
         }
+
+        @Test
+        void transformations_can_be_chained_via_fluent_api() {
+            var transformation = identity()
+                    .rotateX(Math.PI / 2)
+                    .scale(5, 5, 5)
+                    .translate(10, 5, 7);
+            assertThat(transformation.times(point)).isEqualTo(point(15, 0, 7));
+        }
     }
 }

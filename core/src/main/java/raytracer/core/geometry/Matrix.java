@@ -7,7 +7,17 @@ import java.util.Arrays;
 import static java.lang.Math.*;
 
 public record Matrix(double[][] values) {
-    public static Matrix translation(int x, int y, int z) {
+
+    public static Matrix identity() {
+        return new Matrix(new double[][]{
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        });
+    }
+
+    public static Matrix translation(double x, double y, double z) {
         return new Matrix(new double[][]{
                 {1, 0, 0, x},
                 {0, 1, 0, y},
@@ -16,7 +26,7 @@ public record Matrix(double[][] values) {
         });
     }
 
-    public static Matrix scaling(int x, int y, int z) {
+    public static Matrix scaling(double x, double y, double z) {
         return new Matrix(new double[][]{
                 {x, 0, 0, 0},
                 {0, y, 0, 0},
@@ -296,5 +306,29 @@ public record Matrix(double[][] values) {
             }
         }
         return new Matrix(cofactorMatrixValues);
+    }
+
+    public Matrix rotateX(double v) {
+        return Matrix.rotationX(v).times(this);
+    }
+
+    public Matrix rotateY(double v) {
+        return Matrix.rotationY(v).times(this);
+    }
+
+    public Matrix rotateZ(double v) {
+        return Matrix.rotationZ(v).times(this);
+    }
+
+    public Matrix scale(double x, double y, double z) {
+        return Matrix.scaling(x, y, z).times(this);
+    }
+
+    public Matrix translate(double x, double y, double z) {
+        return Matrix.translation(x, y, z).times(this);
+    }
+
+    public Matrix shear(ShearingBuilder builder) {
+        return builder.build().times(this);
     }
 }
