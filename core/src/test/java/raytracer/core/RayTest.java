@@ -57,7 +57,6 @@ class RayTest {
     @Test
     void a_ray_intersects_a_sphere_at_two_points() {
         var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
-        var sphere = new Sphere();
 
         var intersections = ray.intersect(sphere);
 
@@ -83,17 +82,13 @@ class RayTest {
     @Test
     void a_ray_misses_a_sphere() {
         var ray = new Ray(point(0, 2, -5), vector(0, 0, 1));
-        var sphere = new Sphere();
-
         var intersections = ray.intersect(sphere);
-
         assertThat(intersections.count()).isEqualTo(0);
     }
 
     @Test
     void a_ray_originates_inside_a_sphere() {
         var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
-        var sphere = new Sphere();
 
         var intersections = ray.intersect(sphere);
 
@@ -105,7 +100,6 @@ class RayTest {
     @Test
     void a_sphere_is_behind_a_ray() {
         var ray = new Ray(point(0, 0, 5), vector(0, 0, 1));
-        var sphere = new Sphere();
 
         var intersections = ray.intersect(sphere);
 
