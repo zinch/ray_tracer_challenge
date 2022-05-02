@@ -8,8 +8,7 @@ plugins {
 }
 
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = "18" } }
-    withType<JavaCompile> { compileJava { targetCompatibility = "18" } }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = "16" } }
 }
 
 repositories {
