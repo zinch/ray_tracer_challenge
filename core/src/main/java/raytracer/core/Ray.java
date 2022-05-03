@@ -66,9 +66,11 @@ public record Ray(Point origin, Vector direction) {
     }
 
     public Intersections intersect(Sphere s) {
-        var sphereToRay = origin.minus(s.origin());
-        var a = direction.dot(direction);
-        var b = 2 * direction.dot(sphereToRay);
+       var transformedRay = this.transform(s.transform().inverse());
+
+        var sphereToRay = transformedRay.origin.minus(s.origin());
+        var a = transformedRay.direction.dot(transformedRay.direction);
+        var b = 2 * transformedRay.direction.dot(sphereToRay);
         var c = sphereToRay.dot(sphereToRay) - 1;
         var discriminant = b * b - 4 * a * c;
         if (discriminant < 0) {

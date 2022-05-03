@@ -171,4 +171,25 @@ class RayTest {
         assertThat(transformedRay.origin()).isEqualTo(point(2, 6, 12));
         assertThat(transformedRay.direction()).isEqualTo(vector(0, 3, 0));
     }
+
+    @Test
+    void intersecting_a_scaled_sphere_with_a_ray() {
+        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
+        var sphere = new Sphere(scaling(2, 2, 2));
+
+        var xs = ray.intersect(sphere);
+
+        assertThat(xs.count()).isEqualTo(2);
+        assertThat(xs.get(0).t).isEqualTo(3);
+        assertThat(xs.get(1).t).isEqualTo(7);
+    }
+    @Test
+    void intersecting_a_translated_sphere_with_a_ray() {
+        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
+        var sphere = new Sphere(translation(5, 0, 0));
+
+        var xs = ray.intersect(sphere);
+
+        assertThat(xs.count()).isEqualTo(0);
+    }
 }
