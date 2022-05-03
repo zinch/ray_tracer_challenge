@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Sphere;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static raytracer.core.geometry.Matrix.scaling;
+import static raytracer.core.geometry.Matrix.translation;
 import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
@@ -150,5 +152,23 @@ class RayTest {
             var hit = xs.hit();
             assertThat(hit).contains(i4);
         }
+    }
+
+    @Test
+    void translating_a_ray() {
+        var ray = new Ray(point(1, 2, 3), vector(0, 1, 0));
+        var m = translation(3, 4, 5);
+        var transformedRay = ray.transform(m);
+        assertThat(transformedRay.origin()).isEqualTo(point(4, 6, 8));
+        assertThat(transformedRay.direction()).isEqualTo(vector(0, 1, 0));
+    }
+
+    @Test
+    void scaling_a_ray() {
+        var ray = new Ray(point(1, 2, 3), vector(0, 1, 0));
+        var m = scaling(2, 3, 4);
+        var transformedRay = ray.transform(m);
+        assertThat(transformedRay.origin()).isEqualTo(point(2, 6, 12));
+        assertThat(transformedRay.direction()).isEqualTo(vector(0, 3, 0));
     }
 }

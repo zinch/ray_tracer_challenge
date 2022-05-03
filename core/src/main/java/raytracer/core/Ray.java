@@ -1,5 +1,6 @@
 package raytracer.core;
 
+import raytracer.core.geometry.Matrix;
 import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.geometry.Vector;
@@ -9,6 +10,7 @@ import java.util.Optional;
 public record Ray(Point origin, Vector direction) {
 
     public static final class Intersection {
+
         public final double t;
         public final Object object;
 
@@ -24,9 +26,11 @@ public record Ray(Point origin, Vector direction) {
                     ", object=" + object +
                     '}';
         }
+
     }
 
     public static final class Intersections {
+
         private final Intersection[] values;
 
         Intersections(Intersection... is) {
@@ -54,6 +58,7 @@ public record Ray(Point origin, Vector direction) {
             }
             return Optional.ofNullable(hit);
         }
+
     }
 
     public Point positionAt(double t) {
@@ -74,4 +79,8 @@ public record Ray(Point origin, Vector direction) {
         return new Intersections(new Intersection(t1, s), new Intersection(t2, s));
     }
 
+
+    public Ray transform(Matrix m) {
+        return new Ray(m.times(origin), m.times(direction));
+    }
 }
