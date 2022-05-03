@@ -117,7 +117,7 @@ class RayTest {
         void when_all_intersections_have_positive_t() {
             var i1 = new Ray.Intersection(1, sphere);
             var i2 = new Ray.Intersection(2, sphere);
-            var xs = new Ray.Intersections(i1, i2);
+            var xs = new Ray.Intersections(i2, i1);
             var hit = xs.hit();
             assertThat(hit).contains(i1);
         }
@@ -135,9 +135,20 @@ class RayTest {
         void when_all_intersections_have_negative_t() {
             var i1 = new Ray.Intersection(-2, sphere);
             var i2 = new Ray.Intersection(-1, sphere);
-            var xs = new Ray.Intersections(i1, i2);
+            var xs = new Ray.Intersections(i2, i1);
             var hit = xs.hit();
             assertThat(hit).isEmpty();
+        }
+
+        @Test
+        void is_always_the_lowest_nonnegative_intersection() {
+            var i1 = new Ray.Intersection(5, sphere);
+            var i2 = new Ray.Intersection(7, sphere);
+            var i3 = new Ray.Intersection(-3, sphere);
+            var i4 = new Ray.Intersection(2, sphere);
+            var xs = new Ray.Intersections(i1, i2, i3, i4);
+            var hit = xs.hit();
+            assertThat(hit).contains(i4);
         }
     }
 }

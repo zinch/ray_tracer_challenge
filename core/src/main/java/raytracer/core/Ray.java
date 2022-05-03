@@ -30,7 +30,6 @@ public record Ray(Point origin, Vector direction) {
         private final Intersection[] values;
 
         Intersections(Intersection... is) {
-            // Intersections must be sorted by increasing t
             this.values = is;
         }
 
@@ -43,13 +42,17 @@ public record Ray(Point origin, Vector direction) {
         }
 
         public Optional<Intersection> hit() {
+            Intersection hit = null;
             var result = Optional.<Intersection>empty();
             for (var intersection : values) {
-                if (intersection.t >= 0) {
-                    return Optional.of(intersection);
+                if (intersection.t < 0) {
+                    continue;
+                }
+                if (hit == null || hit.t > intersection.t) {
+                    hit = intersection;
                 }
             }
-            return result;
+            return Optional.ofNullable(hit);
         }
     }
 
