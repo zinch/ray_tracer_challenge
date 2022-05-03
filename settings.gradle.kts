@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "ray_tracer_challenge"
-include("projectile", "core", "clock", "utils")
+include("core", "utils", "projectile", "clock", "sphereProjection")
