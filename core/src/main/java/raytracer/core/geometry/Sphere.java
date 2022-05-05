@@ -37,6 +37,7 @@ public class Sphere implements Shape3d {
         return new Sphere(transform, material);
     }
 
+    @Override
     public Material material() {
         return material;
     }
