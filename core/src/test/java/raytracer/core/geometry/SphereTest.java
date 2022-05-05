@@ -3,6 +3,7 @@ package raytracer.core.geometry;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static raytracer.core.geometry.Matrix.translation;
 import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
@@ -16,9 +17,9 @@ class SphereTest {
 
     @Test
     void changing_a_transformation_of_a_sphere() {
-        var t = Matrix.translation(2, 3, 4);
+        var t = translation(2, 3, 4);
         var s = new Sphere(t);
-        assertThat(s.transform()).isEqualTo(Matrix.translation(2, 3, 4));
+        assertThat(s.transform()).isEqualTo(translation(2, 3, 4));
     }
 
     @Test
@@ -40,5 +41,12 @@ class SphereTest {
     void the_normal_is_a_normalized_vector() {
         var normal = sphere.normalAt(point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
         assertThat(normal).isEqualTo(normal.normalize());
+    }
+
+    @Test
+    void computing_the_normal_on_a_translated_sphere() {
+        var sphere = new Sphere(translation(0, 1, 0));
+        var normal = sphere.normalAt(point(0, 1.70711, -0.70711));
+        assertThat(normal).isEqualTo(vector(0, 0.70711, -0.70711));
     }
 }
