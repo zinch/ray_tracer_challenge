@@ -49,4 +49,8 @@ public final class Vector extends Tuple {
                 x * v.y - y * v.x
         );
     }
+
+    public Vector reflect(Vector normal) {
+        return this.minus(normal.times(2 * this.dot(normal)));
+    }
 }

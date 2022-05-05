@@ -105,4 +105,18 @@ class VectorTest {
         assertThat(v1.cross(v2)).isEqualTo(vector(-1, 2, -1));
         assertThat(v2.cross(v1)).isEqualTo(vector(1, -2, 1));
     }
+
+    @Test
+    void reflecting_a_vector_approaching_45_deg() {
+        var v = vector(1, -1, 0);
+        var n = vector(0, 1, 0);
+        assertThat(v.reflect(n)).isEqualTo(vector(1, 1, 0));
+    }
+
+    @Test
+    void reflecting_a_vector_off_a_slanted_surface() {
+        var v = vector(0, -1, 0);
+        var n = vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0);
+        assertThat(v.reflect(n)).isEqualTo(vector(1, 0, 0));
+    }
 }
