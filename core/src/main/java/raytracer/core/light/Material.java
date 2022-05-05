@@ -16,7 +16,7 @@ public class Material {
 
     public final static class MaterialBuilder {
 
-        private Color color = new Color(1, 1, 1);
+        private Color color = Color.WHITE;
         private double ambient = 0.1;
         private double diffuse = 0.9;
         private double specular = 0.9;

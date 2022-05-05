@@ -11,7 +11,7 @@ import static raytracer.core.geometry.Tuple.vector;
 public class LightingTest {
     private final Material material = Material.DEFAULT;
     private final Point position = point(0, 0, 0);
-    private final PointLight light = new PointLight(point(0, 0, -10), new Color(1, 1, 1));
+    private final PointLight light = new PointLight(point(0, 0, -10), Color.WHITE);
 
     @Test
     void lighting_with_the_eye_between_the_light_and_the_surface() {
@@ -38,7 +38,7 @@ public class LightingTest {
     void lightning_with_the_eye_opposite_surface_and_light_offset_45_deg() {
         var eye = vector(0, 0, -1);
         var normal = vector(0, 0, -1);
-        var light = new PointLight(point(0, 10, -10), new Color(1, 1, 1));
+        var light = new PointLight(point(0, 10, -10), Color.WHITE);
 
         var lighting = new Lighting(material, light);
 
@@ -49,7 +49,7 @@ public class LightingTest {
     void lightning_with_eye_in_the_path_of_the_reflection_vector() {
         var eye = vector(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
         var normal = vector(0, 0, -1);
-        var light = new PointLight(point(0, 10, -10), new Color(1, 1, 1));
+        var light = new PointLight(point(0, 10, -10), Color.WHITE);
 
         var lighting = new Lighting(material, light);
 
@@ -60,7 +60,7 @@ public class LightingTest {
     void lighting_with_the_light_behind_the_surface() {
         var eye = vector(0, 0, -1);
         var normal = vector(0, 0, -1);
-        var light = new PointLight(point(0, 0, 10), new Color(1, 1, 1));
+        var light = new PointLight(point(0, 0, 10), Color.WHITE);
 
         var lighting = new Lighting(material, light);
 

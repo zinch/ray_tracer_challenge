@@ -5,6 +5,7 @@ import raytracer.utils.MathUtils;
 public record Color(double red, double green, double blue) {
 
     public static final Color BLACK = new Color(0, 0, 0);
+    public static final Color WHITE = new Color(1, 1, 1);
 
     public Color plus(Color c) {
         return new Color(red + c.red, green + c.green, blue + c.blue);

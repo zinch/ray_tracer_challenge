@@ -9,7 +9,7 @@ class MaterialTest {
     @Test
     void the_default_material() {
         var material = Material.builder().build();
-        assertThat(material.color()).isEqualTo(new Color(1, 1, 1));
+        assertThat(material.color()).isEqualTo(Color.WHITE);
         assertThat(material.ambient()).isEqualTo(0.1);
         assertThat(material.diffuse()).isEqualTo(0.9);
         assertThat(material.specular()).isEqualTo(0.9);
