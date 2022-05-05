@@ -3,27 +3,29 @@ import raytracer.core.export.CanvasToPpmConverter;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.graphics.Canvas;
 import raytracer.core.graphics.Color;
+import raytracer.core.light.Material;
+import raytracer.core.light.PointLight;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static raytracer.core.geometry.Matrix.scaling;
 import static raytracer.core.geometry.Tuple.point;
 
 public class SphereProjection {
     public static void main(String[] args) {
-        int size = 400;
+        int size = 600;
         var canvas = new Canvas(size, size);
-        var grey = new Color(0.1, 0.1, 0.1);
-        var green = new Color(0, 0.7, 0.3);
         var wallZ = 10.0;
         var wallSize = 20.0;
-        var sphere = new Sphere();
-        var lightSource = point(0, 0, -5);
+        var sphere = makeSphere();
+        var light = makeLight();
 
         var pixelSize = wallSize / size;
         var half = wallSize / 2;
 
+        var rayPosition = point(0, 0, -5);
         for (int y = 0; y < size; y++) {
             // Compute the world  coordinate (top = +half, bottom = -half)
             var worldY = half - pixelSize * y;
@@ -31,10 +33,18 @@ public class SphereProjection {
                 // Compute the world coordinates (left = -half, right = +half)
                 var worldX = -half + pixelSize * x;
                 var position = point(worldX, worldY, wallZ);
-                var ray = new Ray(lightSource, position.minus(lightSource).normalize());
+                var rayDirection = position.minus(rayPosition).normalize();
+                var ray = new Ray(rayPosition, rayDirection);
                 var xs = ray.intersect(sphere);
-                var color = (xs.count() == 0) ? grey : green;
-                canvas.writePixelAt(color, x, y);
+                if (xs.count() > 0) {
+                    var hit = xs.hit().orElseThrow();
+                    var point = ray.positionAt(hit.t);
+                    var normal = hit.object.normalAt(point);
+                    var eye = rayDirection.negate();
+
+                    var color = light.lightningAt(point, hit.object.material(), normal, eye);
+                    canvas.writePixelAt(color, x, y);
+                }
             }
         }
 
@@ -46,5 +56,17 @@ public class SphereProjection {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private static Sphere makeSphere() {
+        var color = new Color(1, 0.25, 0.85);
+        var material = Material.builder().color(color).build();
+        var transform = scaling(1.5, 0.6, 1.5).rotateX(-Math.PI / 8);
+        return new Sphere(transform, material);
+    }
+
+    private static PointLight makeLight() {
+        var lightPosition = point(-10, 10, -10);
+        return new PointLight(lightPosition, Color.WHITE);
     }
 }
