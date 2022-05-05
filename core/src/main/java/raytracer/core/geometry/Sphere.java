@@ -1,21 +1,28 @@
 package raytracer.core.geometry;
 
-import static raytracer.core.geometry.Matrix.*;
+import raytracer.core.light.Material;
+
 import static raytracer.core.geometry.Tuple.point;
 
 public class Sphere {
     private static final Point ORIGIN = point(0, 0, 0);
     private final Point origin = point(0, 0, 0);
     private final Matrix transform;
+    private final Material material;
     private Matrix inverse;
     private Matrix inverseTransposed;
 
     public Sphere() {
-        this.transform = identity();
+        this(Matrix.IDENTITY, Material.DEFAULT);
     }
 
     public Sphere(Matrix t) {
+        this(t, Material.DEFAULT);
+    }
+
+    public Sphere(Matrix t, Material m) {
         this.transform = t;
+        this.material = m;
     }
 
     public Point origin() {
@@ -24,6 +31,14 @@ public class Sphere {
 
     public Matrix transform() {
         return transform;
+    }
+
+    public Sphere withMaterial(Material material) {
+        return new Sphere(transform, material);
+    }
+
+    public Material material() {
+        return material;
     }
 
     public Vector normalAt(Point point) {

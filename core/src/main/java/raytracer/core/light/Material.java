@@ -1,11 +1,13 @@
 package raytracer.core.light;
 
 import raytracer.core.graphics.Color;
+import raytracer.utils.MathUtils;
 
 import java.util.Objects;
 
 public class Material {
 
+    public static final Material DEFAULT = Material.builder().build();
     private final Color color;
     private final double ambient;
     private final double diffuse;
@@ -80,5 +82,28 @@ public class Material {
 
     public double shininess() {
         return shininess;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        var material = (Material) o;
+        return color.equals(material.color) &&
+                MathUtils.areEqual(ambient, material.ambient) &&
+                MathUtils.areEqual(diffuse, material.diffuse) &&
+                MathUtils.areEqual(specular, material.specular) &&
+                MathUtils.areEqual(shininess, material.shininess);
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "color=" + color +
+                ", ambient=" + ambient +
+                ", diffuse=" + diffuse +
+                ", specular=" + specular +
+                ", shininess=" + shininess +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package raytracer.core.geometry;
 
 import org.junit.jupiter.api.Test;
+import raytracer.core.light.Material;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Matrix.translation;
@@ -12,7 +13,7 @@ class SphereTest {
 
     @Test
     void default_transformation_of_a_sphere() {
-        assertThat(sphere.transform()).isEqualTo(Matrix.identity());
+        assertThat(sphere.transform()).isEqualTo(Matrix.IDENTITY);
     }
 
     @Test
@@ -48,5 +49,18 @@ class SphereTest {
         var sphere = new Sphere(translation(0, 1, 0));
         var normal = sphere.normalAt(point(0, 1.70711, -0.70711));
         assertThat(normal).isEqualTo(vector(0, 0.70711, -0.70711));
+    }
+
+    @Test
+    void a_sphere_has_a_default_material() {
+        var defaultMaterial = Material.builder().build();
+        assertThat(sphere.material()).isEqualTo(defaultMaterial);
+    }
+
+    @Test
+    void a_sphere_may_be_assigned_a_material() {
+        var material = Material.builder().ambient(1).build();
+        var s = sphere.withMaterial(material);
+        assertThat(s.material()).isEqualTo(material);
     }
 }

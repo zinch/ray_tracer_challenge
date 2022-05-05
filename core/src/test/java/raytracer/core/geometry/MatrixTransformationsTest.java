@@ -161,7 +161,7 @@ public class MatrixTransformationsTest {
 
         @Test
         void transformations_can_be_chained_via_fluent_api() {
-            var transformation = identity()
+            var transformation = Matrix.IDENTITY
                     .rotateX(Math.PI / 2)
                     .scale(5, 5, 5)
                     .translate(10, 5, 7);

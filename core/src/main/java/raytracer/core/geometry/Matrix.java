@@ -8,14 +8,12 @@ import static java.lang.Math.*;
 
 public record Matrix(double[][] values) {
 
-    public static Matrix identity() {
-        return new Matrix(new double[][]{
-                {1, 0, 0, 0},
-                {0, 1, 0, 0},
-                {0, 0, 1, 0},
-                {0, 0, 0, 1}
-        });
-    }
+    public final static Matrix IDENTITY = new Matrix(new double[][]{
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1}
+    });
 
     public static Matrix translation(double x, double y, double z) {
         return new Matrix(new double[][]{
