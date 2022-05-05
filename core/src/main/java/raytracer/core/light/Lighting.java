@@ -9,22 +9,14 @@ public record Lighting(Material material, PointLight light) {
         var effectiveColor = light.intensity().times(material.color());
         var lightVector = light().position().minus(point).normalize();
         var ambient = effectiveColor.times(material.ambient());
-        Color diffuse;
-        Color specular;
+        Color diffuse = Color.BLACK;
+        Color specular = Color.BLACK;
 
         var lightDotNormal = lightVector.dot(normal);
-        var isLightBehindSurface = lightDotNormal < 0;
-        if (isLightBehindSurface) {
-            diffuse = Color.BLACK;
-            specular = Color.BLACK;
-        } else {
+        if (lightDotNormal >= 0) {
             diffuse = effectiveColor.times(material.diffuse()).times(lightDotNormal);
-            var reflect = lightVector.negate().reflect(normal);
-            var reflectDotEye = eye.dot(reflect);
-            var lightReflectsAway = reflectDotEye < 0;
-            if (lightReflectsAway) {
-                specular = Color.BLACK;
-            } else {
+            var reflectDotEye = eye.dot(lightVector.negate().reflect(normal));
+            if (reflectDotEye >= 0) {
                 var factor = Math.pow(reflectDotEye, material.shininess());
                 specular = light.intensity().times(material.specular()).times(factor);
             }
