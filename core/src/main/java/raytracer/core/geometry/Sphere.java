@@ -4,7 +4,7 @@ import raytracer.core.light.Material;
 
 import static raytracer.core.geometry.Tuple.point;
 
-public class Sphere {
+public class Sphere implements Shape3d {
     private static final Point ORIGIN = point(0, 0, 0);
     private final Point origin = point(0, 0, 0);
     private final Matrix transform;
@@ -41,6 +41,7 @@ public class Sphere {
         return material;
     }
 
+    @Override
     public Vector normalAt(Point point) {
         var objectPoint = inverse().times(point);
 

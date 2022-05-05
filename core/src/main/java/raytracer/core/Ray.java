@@ -1,9 +1,6 @@
 package raytracer.core;
 
-import raytracer.core.geometry.Matrix;
-import raytracer.core.geometry.Point;
-import raytracer.core.geometry.Sphere;
-import raytracer.core.geometry.Vector;
+import raytracer.core.geometry.*;
 
 import java.util.Optional;
 
@@ -12,9 +9,9 @@ public record Ray(Point origin, Vector direction) {
     public static final class Intersection {
 
         public final double t;
-        public final Object object;
+        public final Shape3d object;
 
-        Intersection(double t, Object obj) {
+        Intersection(double t, Shape3d obj) {
             this.t = t;
             this.object = obj;
         }
@@ -66,7 +63,7 @@ public record Ray(Point origin, Vector direction) {
     }
 
     public Intersections intersect(Sphere s) {
-       var transformedRay = this.transform(s.transform().inverse());
+        var transformedRay = this.transform(s.transform().inverse());
 
         var sphereToRay = transformedRay.origin.minus(s.origin());
         var a = transformedRay.direction.dot(transformedRay.direction);
