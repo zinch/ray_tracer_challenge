@@ -99,7 +99,7 @@ public class Material {
     @Override
     public String toString() {
         return "Material{" +
-                "color=" + color +
+                "computeAt=" + color +
                 ", ambient=" + ambient +
                 ", diffuse=" + diffuse +
                 ", specular=" + specular +
