@@ -1,7 +1,5 @@
 import raytracer.core.Ray;
 import raytracer.core.export.CanvasToPpmConverter;
-import raytracer.core.geometry.Matrix;
-import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.graphics.Canvas;
 import raytracer.core.graphics.Color;
@@ -10,10 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static raytracer.core.geometry.Matrix.identity;
-import static raytracer.core.geometry.Matrix.scaling;
 import static raytracer.core.geometry.Tuple.point;
-import static raytracer.core.geometry.Tuple.vector;
 
 public class SphereProjection {
     public static void main(String[] args) {
