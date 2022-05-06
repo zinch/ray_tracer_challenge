@@ -1,6 +1,9 @@
 package raytracer.core.geometry;
 
+import raytracer.core.Ray;
 import raytracer.core.light.Material;
+
+import java.util.List;
 
 import static raytracer.core.geometry.Tuple.point;
 
@@ -48,6 +51,11 @@ public class Sphere implements Shape3d {
 
         var objectNormal = objectPoint.minus(ORIGIN);
         return inverseTransposed().times(objectNormal).normalize();
+    }
+
+    @Override
+    public Ray.Intersections intersect(Ray ray) {
+        return ray.intersect(this);
     }
 
     private Matrix inverse() {

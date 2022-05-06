@@ -2,6 +2,9 @@ package raytracer.core;
 
 import raytracer.core.geometry.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 
 public record Ray(Point origin, Vector direction) {
@@ -9,6 +12,7 @@ public record Ray(Point origin, Vector direction) {
     public static final class Intersection {
 
         public final double t;
+
         public final Shape3d object;
 
         Intersection(double t, Shape3d obj) {
@@ -23,7 +27,6 @@ public record Ray(Point origin, Vector direction) {
                     ", object=" + object +
                     '}';
         }
-
     }
 
     public static final class Intersections {
@@ -56,6 +59,13 @@ public record Ray(Point origin, Vector direction) {
             return Optional.ofNullable(hit);
         }
 
+        public Intersections compose(Intersections xs) {
+            var newValues = new Intersection[values.length + xs.values.length];
+            System.arraycopy(xs.values, 0, newValues, 0, xs.values.length);
+            System.arraycopy(values, 0, newValues, xs.values.length, values.length);
+            Arrays.sort(newValues, Comparator.comparingDouble(i -> i.t));
+            return new Intersections(newValues);
+        }
     }
 
     public Point positionAt(double t) {
@@ -78,6 +88,14 @@ public record Ray(Point origin, Vector direction) {
         return new Intersections(new Intersection(t1, s), new Intersection(t2, s));
     }
 
+    public Intersections intersect(World world) {
+        var intersections = new Intersections();
+        for (Shape3d shape : world.objects()) {
+            var xs = shape.intersect(this);
+            intersections = intersections.compose(xs);
+        }
+        return intersections;
+    }
 
     public Ray transform(Matrix m) {
         return new Ray(m.times(origin), m.times(direction));
