@@ -2,20 +2,24 @@ package raytracer.core;
 
 import raytracer.core.geometry.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Optional;
 
 public record Ray(Point origin, Vector direction) {
 
+    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector) {
+    }
+
     public static final class Intersection {
 
+        private final Ray ray;
         public final double t;
 
         public final Shape3d object;
 
-        Intersection(double t, Shape3d obj) {
+        Intersection(Ray r, double t, Shape3d obj) {
+            this.ray = r;
             this.t = t;
             this.object = obj;
         }
@@ -26,6 +30,13 @@ public record Ray(Point origin, Vector direction) {
                     "t=" + t +
                     ", object=" + object +
                     '}';
+        }
+
+        public Computations prepareComputations() {
+            var point = ray.positionAt(t);
+            var eyeVector = ray.direction.negate();
+            var normalVector = object.normalAt(point);
+            return new Computations(t, object, point, eyeVector, normalVector);
         }
     }
 
@@ -85,7 +96,7 @@ public record Ray(Point origin, Vector direction) {
         }
         var t1 = (-b - Math.sqrt(discriminant)) / (2 * a);
         var t2 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        return new Intersections(new Intersection(t1, s), new Intersection(t2, s));
+        return new Intersections(new Intersection(this, t1, s), new Intersection(this, t2, s));
     }
 
     public Intersections intersect(World world) {
