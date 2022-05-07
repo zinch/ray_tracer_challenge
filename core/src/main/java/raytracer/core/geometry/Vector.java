@@ -1,9 +1,6 @@
 package raytracer.core.geometry;
 
-public final class Vector extends Tuple {
-    Vector(double x, double y, double z) {
-        super(x, y, z, 0.0);
-    }
+public record Vector(double x, double y, double z) implements ProtoTuple {
 
     public Point plus(Point p) {
         return p.plus(this);
@@ -52,5 +49,15 @@ public final class Vector extends Tuple {
 
     public Vector reflect(Vector normal) {
         return this.minus(normal.times(2 * this.dot(normal)));
+    }
+
+    @Override
+    public double w() {
+        return 0d;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return isEqualTo(o);
     }
 }

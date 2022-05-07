@@ -4,7 +4,7 @@ import raytracer.utils.MathUtils;
 
 import java.util.Objects;
 
-public sealed class Tuple permits Vector {
+public class Tuple {
     public final double x;
     public final double y;
     public final double z;

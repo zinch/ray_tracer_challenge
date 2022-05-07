@@ -2,7 +2,7 @@ package raytracer.core.geometry;
 
 import raytracer.utils.MathUtils;
 
-public sealed interface ProtoTuple permits Point {
+public sealed interface ProtoTuple permits Point, Vector {
     double x();
 
     double y();

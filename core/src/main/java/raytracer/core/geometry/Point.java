@@ -3,11 +3,11 @@ package raytracer.core.geometry;
 public record Point(double x, double y, double z) implements ProtoTuple {
 
     public Point plus(Vector v) {
-        return new Point(x + v.x, y + v.y, z + v.z);
+        return new Point(x + v.x(), y + v.y(), z + v.z());
     }
 
     public Point minus(Vector v) {
-        return plus(new Vector(-v.x, -v.y, -v.z));
+        return plus(v.negate());
     }
 
     public Vector minus(Point p) {

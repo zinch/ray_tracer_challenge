@@ -4,7 +4,8 @@ import raytracer.utils.MathUtils;
 
 import java.util.Arrays;
 
-import static java.lang.Math.*;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public record Matrix(double[][] values) {
 
@@ -168,13 +169,8 @@ public record Matrix(double[][] values) {
         return new Vector(values[0], values[1], values[2]);
     }
 
-    private double[] multiplyBy(Point p) {
+    private double[] multiplyBy(ProtoTuple p) {
         double[] tuple = {p.x(), p.y(), p.z(), p.w()};
-        return multiplyBy(tuple);
-    }
-
-    private double[] multiplyBy(Tuple t) {
-        double[] tuple = {t.x, t.y, t.z, t.w};
         return multiplyBy(tuple);
     }
 
