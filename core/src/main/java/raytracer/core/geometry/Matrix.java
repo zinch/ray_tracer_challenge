@@ -169,7 +169,7 @@ public record Matrix(double[][] values) {
         return new Vector(values[0], values[1], values[2]);
     }
 
-    private double[] multiplyBy(ProtoTuple p) {
+    private double[] multiplyBy(Tuple p) {
         double[] tuple = {p.x(), p.y(), p.z(), p.w()};
         return multiplyBy(tuple);
     }

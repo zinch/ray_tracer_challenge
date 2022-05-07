@@ -1,6 +1,6 @@
 package raytracer.core.geometry;
 
-public record Vector(double x, double y, double z) implements ProtoTuple {
+public record Vector(double x, double y, double z) implements Tuple {
 
     public Point plus(Point p) {
         return p.plus(this);
@@ -59,5 +59,10 @@ public record Vector(double x, double y, double z) implements ProtoTuple {
     @Override
     public boolean equals(Object o) {
         return isEqualTo(o);
+    }
+
+    @Override
+    public String toString() {
+        return asString();
     }
 }
