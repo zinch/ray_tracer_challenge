@@ -25,7 +25,7 @@ public final class Intersection {
                 '}';
     }
 
-    public Computations prepareComputations() {
+    Computations prepareComputations() {
         var point = ray.positionAt(t);
         var eyeVector = ray.direction().negate();
         var normalVector = object.normalAt(point);
@@ -35,7 +35,7 @@ public final class Intersection {
                 inside ? normalVector.negate() : normalVector, inside);
     }
 
-    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector,
-                               boolean inside) {
+    record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector,
+                        boolean inside) {
     }
 }
