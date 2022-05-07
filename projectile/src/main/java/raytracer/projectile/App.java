@@ -20,10 +20,10 @@ public class App {
         var canvas = new Canvas(width, height);
         var color = new Color(0.9, 0.1, 0.1);
         canvas.writePixelAt(color, 0, height - 1);
-        while (p.position().y > 0) {
+        while (p.position().y() > 0) {
             p = tick(e, p);
-            int x = (int) Math.ceil(p.position().x);
-            int y = (int) Math.ceil(p.position().y);
+            int x = (int) Math.ceil(p.position().x());
+            int y = (int) Math.ceil(p.position().y());
             if (x >= 0 && y >= 0 && x <= width && y <= height) {
                 canvas.writePixelAt(color, x, height - y);
             }
