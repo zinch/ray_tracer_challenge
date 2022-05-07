@@ -43,4 +43,12 @@ public class World {
     public PointLight light() {
         return light;
     }
+
+    public World withLight(PointLight light) {
+        return new World(light, objects);
+    }
+
+    public Color shadeHit(Ray.Computations comps) {
+        return light.lightningAt(comps.point(), comps.object().material(), comps.normalVector(), comps.eyeVector());
+    }
 }

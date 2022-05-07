@@ -1,6 +1,7 @@
 package raytracer.core;
 
 import raytracer.core.geometry.*;
+import raytracer.core.graphics.Color;
 
 import java.util.Arrays;
 import java.util.Comparator;

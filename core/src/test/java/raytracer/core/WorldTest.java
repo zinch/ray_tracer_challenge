@@ -5,12 +5,15 @@ import raytracer.core.geometry.Matrix;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.graphics.Color;
 import raytracer.core.light.Material;
+import raytracer.core.light.PointLight;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 class WorldTest {
+
+    private final Ray ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
 
     @Test
     void the_default_world() {
@@ -42,12 +45,30 @@ class WorldTest {
 
     @Test
     void intersect_a_world_with_a_ray() {
-        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
         var xs = ray.intersect(World.DEFAULT);
         assertThat(xs.count()).isEqualTo(4);
         assertThat(xs.get(0).t).isEqualTo(4);
         assertThat(xs.get(1).t).isEqualTo(4.5);
         assertThat(xs.get(2).t).isEqualTo(5.5);
         assertThat(xs.get(3).t).isEqualTo(6);
+    }
+
+    @Test
+    void shading_an_intersection() {
+        var xs = ray.intersect(World.DEFAULT);
+        var intersection = xs.get(0);
+        var comps = intersection.prepareComputations();
+        assertThat(World.DEFAULT.shadeHit(comps)).isEqualTo(new Color(0.38066, 0.47583, 0.2855));
+    }
+
+    @Test
+    void shading_an_intersection_from_the_inside() {
+        var light = new PointLight(point(0, 0.25, 0), new Color(1, 1, 1));
+        var world = World.DEFAULT.withLight(light);
+        var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
+        var xs = ray.intersect(world);
+        var intersection = xs.get(2);
+        var comps = intersection.prepareComputations();
+        assertThat(world.shadeHit(comps)).isEqualTo(new Color(0.90498, 0.90498, 0.90498));
     }
 }
