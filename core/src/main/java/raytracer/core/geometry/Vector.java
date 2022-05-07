@@ -6,7 +6,7 @@ public final class Vector extends Tuple {
     }
 
     public Point plus(Point p) {
-        return new Point(x + p.x, y + p.y, z + p.z);
+        return p.plus(this);
     }
 
     public Vector plus(Vector v) {

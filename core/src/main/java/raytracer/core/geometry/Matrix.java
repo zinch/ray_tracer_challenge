@@ -168,7 +168,17 @@ public record Matrix(double[][] values) {
         return new Vector(values[0], values[1], values[2]);
     }
 
+    private double[] multiplyBy(Point p) {
+        double[] tuple = {p.x(), p.y(), p.z(), p.w()};
+        return multiplyBy(tuple);
+    }
+
     private double[] multiplyBy(Tuple t) {
+        double[] tuple = {t.x, t.y, t.z, t.w};
+        return multiplyBy(tuple);
+    }
+
+    private double[] multiplyBy(double[] tuple) {
         double x = 0;
         double y = 0;
         double z = 0;
@@ -176,7 +186,6 @@ public record Matrix(double[][] values) {
         if (M != 4) {
             throw new IllegalArgumentException("Can only multiply tuples with 4x4 matrices!");
         }
-        double[] tuple = {t.x, t.y, t.z, t.w};
         for (int j = 0; j < M; j++) {
             x += at(0, j) * tuple[j];
             y += at(1, j) * tuple[j];
