@@ -9,6 +9,8 @@ import raytracer.core.graphics.Color;
 import raytracer.core.light.Material;
 import raytracer.core.light.PointLight;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WorldTest {
@@ -19,7 +21,8 @@ class WorldTest {
     void the_default_world() {
         var w = World.DEFAULT;
 
-        var light = w.light();
+        assertThat(w.lights()).hasSize(1);
+        var light = w.lights().get(0);
         assertThat(light.position()).isEqualTo(new Point(-10, 10, -10));
         assertThat(light.intensity()).isEqualTo(Color.WHITE);
 
@@ -64,7 +67,7 @@ class WorldTest {
     @Test
     void shading_an_intersection_from_the_inside() {
         var light = new PointLight(new Point(0, 0.25, 0), new Color(1, 1, 1));
-        var world = World.DEFAULT.withLight(light);
+        var world = World.DEFAULT.withLights(List.of(light));
         var ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
         var xs = ray.intersect(world);
         var intersection = xs.get(2);

@@ -8,7 +8,6 @@ import raytracer.core.light.Material;
 import raytracer.core.light.PointLight;
 
 import java.util.List;
-import java.util.Objects;
 
 import static raytracer.core.geometry.Matrix.scaling;
 
@@ -24,14 +23,14 @@ public class World {
                 .color(new Color(0.8, 1.0, 0.6))
                 .build());
         var objects = List.of(firstSphere, new Sphere(scaling(0.5, 0.5, 0.5)));
-        DEFAULT = new World(light, objects);
+        DEFAULT = new World(List.of(light), objects);
     }
 
-    private final PointLight light;
+    private final List<PointLight> lights;
     private final List<Shape3d> objects;
 
-    public World(PointLight light, List<? extends Shape3d> objects) {
-        this.light = Objects.requireNonNull(light);
+    public World(List<PointLight> lights, List<? extends Shape3d> objects) {
+        this.lights = List.copyOf(lights);
         this.objects = List.copyOf(objects);
     }
 
@@ -39,15 +38,19 @@ public class World {
         return objects;
     }
 
-    public PointLight light() {
-        return light;
+    public List<PointLight> lights() {
+        return lights;
     }
 
-    public World withLight(PointLight light) {
-        return new World(light, objects);
+    public World withLights(List<PointLight> lights) {
+        return new World(lights, objects);
     }
 
-    public Color shadeHit(Ray.Computations comps) {
-        return light.lightningAt(comps.point(), comps.object().material(), comps.normalVector(), comps.eyeVector());
+    public Color shadeHit(Ray.Computations cs) {
+        var color = Color.BLACK;
+        for (PointLight light : lights) {
+            color = color.plus(light.lightningAt(cs.point(), cs.object().material(), cs.normalVector(), cs.eyeVector()));
+        }
+        return color;
     }
 }
