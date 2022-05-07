@@ -24,15 +24,15 @@ class RayTest {
 
     @Test
     void an_intersection_encapsulates_t_and_object() {
-        var intersection = new Ray.Intersection(ray, 3.5, sphere);
+        var intersection = new Intersection(ray, 3.5, sphere);
         assertThat(intersection.t).isEqualTo(3.5);
         assertThat(intersection.object).isSameAs(sphere);
     }
 
     @Test
     void aggregating_intersections() {
-        var i1 = new Ray.Intersection(ray, 1, sphere);
-        var i2 = new Ray.Intersection(ray, 2, sphere);
+        var i1 = new Intersection(ray, 1, sphere);
+        var i2 = new Intersection(ray, 2, sphere);
 
         var xs = new Ray.Intersections(i1, i2);
 
@@ -118,8 +118,8 @@ class RayTest {
     class HitTest {
         @Test
         void when_all_intersections_have_positive_t() {
-            var i1 = new Ray.Intersection(ray, 1, sphere);
-            var i2 = new Ray.Intersection(ray, 2, sphere);
+            var i1 = new Intersection(ray, 1, sphere);
+            var i2 = new Intersection(ray, 2, sphere);
             var xs = new Ray.Intersections(i2, i1);
             var hit = xs.hit();
             assertThat(hit).contains(i1);
@@ -127,8 +127,8 @@ class RayTest {
 
         @Test
         void when_some_intersections_have_negative_t() {
-            var i1 = new Ray.Intersection(ray, -1, sphere);
-            var i2 = new Ray.Intersection(ray, 1, sphere);
+            var i1 = new Intersection(ray, -1, sphere);
+            var i2 = new Intersection(ray, 1, sphere);
             var xs = new Ray.Intersections(i1, i2);
             var hit = xs.hit();
             assertThat(hit).contains(i2);
@@ -136,8 +136,8 @@ class RayTest {
 
         @Test
         void when_all_intersections_have_negative_t() {
-            var i1 = new Ray.Intersection(ray, -2, sphere);
-            var i2 = new Ray.Intersection(ray, -1, sphere);
+            var i1 = new Intersection(ray, -2, sphere);
+            var i2 = new Intersection(ray, -1, sphere);
             var xs = new Ray.Intersections(i2, i1);
             var hit = xs.hit();
             assertThat(hit).isEmpty();
@@ -145,10 +145,10 @@ class RayTest {
 
         @Test
         void is_always_the_lowest_nonnegative_intersection() {
-            var i1 = new Ray.Intersection(ray, 5, sphere);
-            var i2 = new Ray.Intersection(ray, 7, sphere);
-            var i3 = new Ray.Intersection(ray, -3, sphere);
-            var i4 = new Ray.Intersection(ray, 2, sphere);
+            var i1 = new Intersection(ray, 5, sphere);
+            var i2 = new Intersection(ray, 7, sphere);
+            var i3 = new Intersection(ray, -3, sphere);
+            var i4 = new Intersection(ray, 2, sphere);
             var xs = new Ray.Intersections(i1, i2, i3, i4);
             var hit = xs.hit();
             assertThat(hit).contains(i4);
@@ -157,7 +157,7 @@ class RayTest {
         @Test
         void when_an_intersection_occurs_on_the_outside() {
             var shape = new Sphere();
-            var intersection = new Ray.Intersection(ray, 4, shape);
+            var intersection = new Intersection(ray, 4, shape);
 
             var comps = intersection.prepareComputations();
 
@@ -168,7 +168,7 @@ class RayTest {
         void when_an_intersection_occurs_on_the_inside() {
             var ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
             var shape = new Sphere();
-            var intersection = new Ray.Intersection(ray, 1, shape);
+            var intersection = new Intersection(ray, 1, shape);
 
             var comps = intersection.prepareComputations();
 
@@ -220,7 +220,7 @@ class RayTest {
     @Test
     void precomputing_the_state_of_an_intersection() {
         var shape = new Sphere();
-        var intersection = new Ray.Intersection(ray, 4, shape);
+        var intersection = new Intersection(ray, 4, shape);
 
         var computations = intersection.prepareComputations();
 

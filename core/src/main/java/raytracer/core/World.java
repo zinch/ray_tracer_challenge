@@ -61,7 +61,7 @@ public class World {
     public Color colorAt(Ray ray) {
         var xs = ray.intersect(this);
         return xs.hit()
-                .map(Ray.Intersection::prepareComputations)
+                .map(Intersection::prepareComputations)
                 .map(this::shadeHit)
                 .orElse(Color.BLACK);
     }
