@@ -1,6 +1,6 @@
 package raytracer.core;
 
-import raytracer.core.geometry.Matrix;
+import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Shape3d;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.graphics.Color;
@@ -11,14 +11,13 @@ import java.util.List;
 import java.util.Objects;
 
 import static raytracer.core.geometry.Matrix.scaling;
-import static raytracer.core.geometry.Tuple.point;
 
 public class World {
 
     public static final World DEFAULT;
 
     static {
-        var light = new PointLight(point(-10, 10, -10), Color.WHITE);
+        var light = new PointLight(new Point(-10, 10, -10), Color.WHITE);
         var firstSphere = new Sphere().withMaterial(Material.builder()
                 .diffuse(0.7)
                 .specular(0.2)

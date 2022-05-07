@@ -1,21 +1,20 @@
 package raytracer.projectile;
 
 import raytracer.core.export.CanvasToPpmConverter;
+import raytracer.core.geometry.Point;
 import raytracer.core.graphics.Canvas;
 import raytracer.core.graphics.Color;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 public class App {
     public static void main(String[] args) {
         System.out.println("Launching projectile!");
-        var p = new Projectile(point(0, 1, 0), vector(1.7, 3.5, 0).normalize().times(6));
+        var p = new Projectile(new Point(0, 1, 0), vector(1.7, 3.5, 0).normalize().times(6));
         var e = new Environment(vector(0, -0.1, 0), vector(-0.01, 0, 0));
         int width = 300;
         int height = 400;

@@ -4,17 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Matrix.scaling;
 import static raytracer.core.geometry.Matrix.translation;
-import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 class RayTest {
 
-    private final Ray ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
+    private final Ray ray = new Ray(new Point(0, 0, -5), vector(0, 0, 1));
     private Sphere sphere;
 
     @BeforeEach
@@ -43,25 +43,25 @@ class RayTest {
 
     @Test
     void creating_and_querying_a_ray() {
-        var origin = point(1, 2, 3);
+        var origin = new Point(1, 2, 3);
         var direction = vector(4, 5, 6);
         var ray = new Ray(origin, direction);
-        assertThat(ray.origin()).isEqualTo(point(1, 2, 3));
+        assertThat(ray.origin()).isEqualTo(new Point(1, 2, 3));
         assertThat(ray.direction()).isEqualTo(vector(4, 5, 6));
     }
 
     @Test
     void computing_a_point_from_a_distance() {
-        var ray = new Ray(point(2, 3, 4), vector(1, 0, 0));
-        assertThat(ray.positionAt(0)).isEqualTo(point(2, 3, 4));
-        assertThat(ray.positionAt(1)).isEqualTo(point(3, 3, 4));
-        assertThat(ray.positionAt(-1)).isEqualTo(point(1, 3, 4));
-        assertThat(ray.positionAt(2.5)).isEqualTo(point(4.5, 3, 4));
+        var ray = new Ray(new Point(2, 3, 4), vector(1, 0, 0));
+        assertThat(ray.positionAt(0)).isEqualTo(new Point(2, 3, 4));
+        assertThat(ray.positionAt(1)).isEqualTo(new Point(3, 3, 4));
+        assertThat(ray.positionAt(-1)).isEqualTo(new Point(1, 3, 4));
+        assertThat(ray.positionAt(2.5)).isEqualTo(new Point(4.5, 3, 4));
     }
 
     @Test
     void a_ray_intersects_a_sphere_at_two_points() {
-        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 0, -5), vector(0, 0, 1));
 
         var intersections = ray.intersect(sphere);
 
@@ -74,7 +74,7 @@ class RayTest {
 
     @Test
     void a_ray_intersects_a_sphere_at_a_tangent() {
-        var ray = new Ray(point(0, 1, -5), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 1, -5), vector(0, 0, 1));
         var sphere = new Sphere();
 
         var intersections = ray.intersect(sphere);
@@ -86,14 +86,14 @@ class RayTest {
 
     @Test
     void a_ray_misses_a_sphere() {
-        var ray = new Ray(point(0, 2, -5), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 2, -5), vector(0, 0, 1));
         var intersections = ray.intersect(sphere);
         assertThat(intersections.count()).isEqualTo(0);
     }
 
     @Test
     void a_ray_originates_inside_a_sphere() {
-        var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 0, 0), vector(0, 0, 1));
 
         var intersections = ray.intersect(sphere);
 
@@ -104,7 +104,7 @@ class RayTest {
 
     @Test
     void a_sphere_is_behind_a_ray() {
-        var ray = new Ray(point(0, 0, 5), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 0, 5), vector(0, 0, 1));
 
         var intersections = ray.intersect(sphere);
 
@@ -166,13 +166,13 @@ class RayTest {
 
         @Test
         void when_an_intersection_occurs_on_the_inside() {
-            var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
+            var ray = new Ray(new Point(0, 0, 0), vector(0, 0, 1));
             var shape = new Sphere();
             var intersection = new Ray.Intersection(ray, 1, shape);
 
             var comps = intersection.prepareComputations();
 
-            assertThat(comps.point()).isEqualTo(point(0, 0, 1));
+            assertThat(comps.point()).isEqualTo(new Point(0, 0, 1));
             assertThat(comps.eyeVector()).isEqualTo(vector(0, 0, -1));
             assertThat(comps.normalVector()).isEqualTo(vector(0, 0, -1));
             assertThat(comps.inside()).isTrue();
@@ -181,19 +181,19 @@ class RayTest {
 
     @Test
     void translating_a_ray() {
-        var ray = new Ray(point(1, 2, 3), vector(0, 1, 0));
+        var ray = new Ray(new Point(1, 2, 3), vector(0, 1, 0));
         var m = translation(3, 4, 5);
         var transformedRay = ray.transform(m);
-        assertThat(transformedRay.origin()).isEqualTo(point(4, 6, 8));
+        assertThat(transformedRay.origin()).isEqualTo(new Point(4, 6, 8));
         assertThat(transformedRay.direction()).isEqualTo(vector(0, 1, 0));
     }
 
     @Test
     void scaling_a_ray() {
-        var ray = new Ray(point(1, 2, 3), vector(0, 1, 0));
+        var ray = new Ray(new Point(1, 2, 3), vector(0, 1, 0));
         var m = scaling(2, 3, 4);
         var transformedRay = ray.transform(m);
-        assertThat(transformedRay.origin()).isEqualTo(point(2, 6, 12));
+        assertThat(transformedRay.origin()).isEqualTo(new Point(2, 6, 12));
         assertThat(transformedRay.direction()).isEqualTo(vector(0, 3, 0));
     }
 
@@ -226,7 +226,7 @@ class RayTest {
 
         assertThat(computations.t()).isEqualTo(4);
         assertThat(computations.object()).isSameAs(intersection.object);
-        assertThat(computations.point()).isEqualTo(point(0, 0, -1));
+        assertThat(computations.point()).isEqualTo(new Point(0, 0, -1));
         assertThat(computations.eyeVector()).isEqualTo(vector(0, 0, -1));
         assertThat(computations.normalVector()).isEqualTo(vector(0, 0, -1));
     }

@@ -25,10 +25,6 @@ public sealed interface Tuple permits Point, Vector {
         return "(" + x() + ", " + y() + ", " + z() + ", " + w() + ')';
     }
 
-    static Point point(double x, double y, double z) {
-        return new Point(x, y, z);
-    }
-
     static Vector vector(double x, double y, double z) {
         return new Vector(x, y, z);
     }

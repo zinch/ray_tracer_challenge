@@ -2,25 +2,25 @@ package raytracer.core;
 
 import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Matrix;
+import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
 import raytracer.core.graphics.Color;
 import raytracer.core.light.Material;
 import raytracer.core.light.PointLight;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 class WorldTest {
 
-    private final Ray ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
+    private final Ray ray = new Ray(new Point(0, 0, -5), vector(0, 0, 1));
 
     @Test
     void the_default_world() {
         var w = World.DEFAULT;
 
         var light = w.light();
-        assertThat(light.position()).isEqualTo(point(-10, 10, -10));
+        assertThat(light.position()).isEqualTo(new Point(-10, 10, -10));
         assertThat(light.intensity()).isEqualTo(Color.WHITE);
 
         var objects = w.objects();
@@ -63,9 +63,9 @@ class WorldTest {
 
     @Test
     void shading_an_intersection_from_the_inside() {
-        var light = new PointLight(point(0, 0.25, 0), new Color(1, 1, 1));
+        var light = new PointLight(new Point(0, 0.25, 0), new Color(1, 1, 1));
         var world = World.DEFAULT.withLight(light);
-        var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 0, 0), vector(0, 0, 1));
         var xs = ray.intersect(world);
         var intersection = xs.get(2);
         var comps = intersection.prepareComputations();

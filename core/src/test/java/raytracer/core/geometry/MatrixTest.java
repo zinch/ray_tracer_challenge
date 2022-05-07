@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static raytracer.core.geometry.Tuple.point;
 
 class MatrixTest {
 
@@ -152,8 +151,8 @@ class MatrixTest {
                 {0, 0, 0, 1}
         });
 
-        var p = point(1, 2, 3);
-        assertThat(m.times(p)).isEqualTo(point(18, 24, 33));
+        var p = new Point(1, 2, 3);
+        assertThat(m.times(p)).isEqualTo(new Point(18, 24, 33));
     }
 
     @Test
@@ -165,9 +164,9 @@ class MatrixTest {
 
     @Test
     void multiplying_point_by_identity_matrix() {
-        var p = point(1, 2, 3);
+        var p = new Point(1, 2, 3);
         var identity = new Matrix(identityMatrix4x4);
-        assertThat(identity.times(p)).isEqualTo(point(1, 2, 3));
+        assertThat(identity.times(p)).isEqualTo(new Point(1, 2, 3));
     }
 
     @Test

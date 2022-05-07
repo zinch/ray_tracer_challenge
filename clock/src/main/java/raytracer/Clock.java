@@ -1,6 +1,8 @@
 package raytracer;
 
 import raytracer.core.export.CanvasToPpmConverter;
+import raytracer.core.geometry.Matrix;
+import raytracer.core.geometry.Point;
 import raytracer.core.graphics.Canvas;
 import raytracer.core.graphics.Color;
 
@@ -8,15 +10,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static raytracer.core.geometry.Matrix.identity;
-import static raytracer.core.geometry.Tuple.point;
-
 public class Clock {
     public static void main(String[] args) {
         int size = 400;
         var canvas = new Canvas(size, size);
         var color = new Color(1, 0, 1);
-        var p = point(0, 1, 0);
+        var p = new Point(0, 1, 0);
         /*
             Clock coordinate system:
             Y
@@ -37,7 +36,7 @@ public class Clock {
          */
         drawAxis(size, size, canvas);
         for (int i = 0; i < 12; i++) {
-            var hourRotation = identity()
+            var hourRotation = Matrix.IDENTITY
                     .rotateZ(-i * Math.PI / 6)
                     // Flip y, because Y points down the screen
                     .scale(size * 3.0 / 8, -size * 3.0 / 8, 0)
@@ -45,7 +44,7 @@ public class Clock {
                     .translate(size / 2.0, size / 2.0, 0);
 
             var transformed = hourRotation.times(p);
-            canvas.writePixelAt(color, transformed.x, transformed.y);
+            canvas.writePixelAt(color, transformed.x(), transformed.y());
         }
         var ppm = CanvasToPpmConverter.convert(canvas);
         try {

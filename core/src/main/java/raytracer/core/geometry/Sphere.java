@@ -3,13 +3,9 @@ package raytracer.core.geometry;
 import raytracer.core.Ray;
 import raytracer.core.light.Material;
 
-import java.util.List;
-
-import static raytracer.core.geometry.Tuple.point;
-
 public class Sphere implements Shape3d {
-    private static final Point ORIGIN = point(0, 0, 0);
-    private final Point origin = point(0, 0, 0);
+    private static final Point ORIGIN = new Point(0, 0, 0);
+    private final Point origin = new Point(0, 0, 0);
     private final Matrix transform;
     private final Material material;
     private Matrix inverse;

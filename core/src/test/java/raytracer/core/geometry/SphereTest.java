@@ -5,7 +5,6 @@ import raytracer.core.light.Material;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Matrix.translation;
-import static raytracer.core.geometry.Tuple.point;
 import static raytracer.core.geometry.Tuple.vector;
 
 class SphereTest {
@@ -25,29 +24,29 @@ class SphereTest {
 
     @Test
     void the_normal_on_a_sphere_at_a_point_on_the_x_axis() {
-        assertThat(sphere.normalAt(point(1, 0, 0))).isEqualTo(vector(1, 0, 0));
+        assertThat(sphere.normalAt(new Point(1, 0, 0))).isEqualTo(vector(1, 0, 0));
     }
 
     @Test
     void the_normal_on_a_sphere_at_a_point_on_the_y_axis() {
-        assertThat(sphere.normalAt(point(0, 1, 0))).isEqualTo(vector(0, 1, 0));
+        assertThat(sphere.normalAt(new Point(0, 1, 0))).isEqualTo(vector(0, 1, 0));
     }
 
     @Test
     void the_normal_on_a_sphere_at_a_point_on_the_z_axis() {
-        assertThat(sphere.normalAt(point(0, 0, 1))).isEqualTo(vector(0, 0, 1));
+        assertThat(sphere.normalAt(new Point(0, 0, 1))).isEqualTo(vector(0, 0, 1));
     }
 
     @Test
     void the_normal_is_a_normalized_vector() {
-        var normal = sphere.normalAt(point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
+        var normal = sphere.normalAt(new Point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
         assertThat(normal).isEqualTo(normal.normalize());
     }
 
     @Test
     void computing_the_normal_on_a_translated_sphere() {
         var sphere = new Sphere(translation(0, 1, 0));
-        var normal = sphere.normalAt(point(0, 1.70711, -0.70711));
+        var normal = sphere.normalAt(new Point(0, 1.70711, -0.70711));
         assertThat(normal).isEqualTo(vector(0, 0.70711, -0.70711));
     }
 
