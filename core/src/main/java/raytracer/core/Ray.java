@@ -8,10 +8,6 @@ import java.util.Optional;
 
 public record Ray(Point origin, Vector direction) {
 
-    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector,
-                               boolean inside) {
-    }
-
     public static final class Intersections {
 
         private final Intersection[] values;

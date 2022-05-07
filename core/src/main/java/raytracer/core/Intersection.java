@@ -1,6 +1,8 @@
 package raytracer.core;
 
+import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Shape3d;
+import raytracer.core.geometry.Vector;
 
 public final class Intersection {
 
@@ -23,13 +25,17 @@ public final class Intersection {
                 '}';
     }
 
-    public Ray.Computations prepareComputations() {
+    public Computations prepareComputations() {
         var point = ray.positionAt(t);
         var eyeVector = ray.direction().negate();
         var normalVector = object.normalAt(point);
         var inside = normalVector.dot(eyeVector) < 0;
 
-        return new Ray.Computations(t, object, point, eyeVector,
+        return new Computations(t, object, point, eyeVector,
                 inside ? normalVector.negate() : normalVector, inside);
+    }
+
+    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector,
+                               boolean inside) {
     }
 }

@@ -50,7 +50,16 @@ public class World {
         return new World(lights, objects);
     }
 
-    public Color shadeHit(Ray.Computations cs) {
+    public Color shadeHit(Intersection.Computations cs) {
+        var color = Color.BLACK;
+        for (PointLight light : lights) {
+            color = color.plus(light.lightningAt(cs.point(), cs.object().material(), cs.normalVector(), cs.eyeVector()));
+        }
+        return color;
+    }
+
+    public Color shadeHit(Intersection intersection) {
+        var cs = intersection.prepareComputations();
         var color = Color.BLACK;
         for (PointLight light : lights) {
             color = color.plus(light.lightningAt(cs.point(), cs.object().material(), cs.normalVector(), cs.eyeVector()));
@@ -61,7 +70,6 @@ public class World {
     public Color colorAt(Ray ray) {
         var xs = ray.intersect(this);
         return xs.hit()
-                .map(Intersection::prepareComputations)
                 .map(this::shadeHit)
                 .orElse(Color.BLACK);
     }
