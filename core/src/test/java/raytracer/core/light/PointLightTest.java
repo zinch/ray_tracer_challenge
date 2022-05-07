@@ -4,10 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Point;
+import raytracer.core.geometry.Vector;
 import raytracer.core.graphics.Color;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static raytracer.core.geometry.Tuple.vector;
 
 class PointLightTest {
     @Test
@@ -30,8 +30,8 @@ class PointLightTest {
 
         @Test
         void lighting_with_the_eye_between_the_light_and_the_surface() {
-            var eye = vector(0, 0, -1);
-            var normal = vector(0, 0, -1);
+            var eye = new Vector(0, 0, -1);
+            var normal = new Vector(0, 0, -1);
 
             assertThat(light.lightningAt(position, material, normal, eye))
                     .isEqualTo(new Color(1.9, 1.9, 1.9));
@@ -39,8 +39,9 @@ class PointLightTest {
 
         @Test
         void lighting_with_the_eye_between_light_and_surface_and_eye_offset_45_deg() {
-            var eye = vector(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
-            var normal = vector(0, 0, -1);
+            double z = -Math.sqrt(2) / 2;
+            var eye = new Vector(0, Math.sqrt(2) / 2, z);
+            var normal = new Vector(0, 0, -1);
 
             assertThat(light.lightningAt(position, material, normal, eye))
                     .isEqualTo(new Color(1.0, 1.0, 1.0));
@@ -48,8 +49,8 @@ class PointLightTest {
 
         @Test
         void lightning_with_the_eye_opposite_surface_and_light_offset_45_deg() {
-            var eye = vector(0, 0, -1);
-            var normal = vector(0, 0, -1);
+            var eye = new Vector(0, 0, -1);
+            var normal = new Vector(0, 0, -1);
             var light = new PointLight(new Point(0, 10, -10), Color.WHITE);
 
             assertThat(light.lightningAt(position, material, normal, eye))
@@ -58,8 +59,10 @@ class PointLightTest {
 
         @Test
         void lightning_with_eye_in_the_path_of_the_reflection_vector() {
-            var eye = vector(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
-            var normal = vector(0, 0, -1);
+            double y = -Math.sqrt(2) / 2;
+            double z = -Math.sqrt(2) / 2;
+            var eye = new Vector(0, y, z);
+            var normal = new Vector(0, 0, -1);
             var light = new PointLight(new Point(0, 10, -10), Color.WHITE);
 
             assertThat(light.lightningAt(position, material, normal, eye))
@@ -68,8 +71,8 @@ class PointLightTest {
 
         @Test
         void lighting_with_the_light_behind_the_surface() {
-            var eye = vector(0, 0, -1);
-            var normal = vector(0, 0, -1);
+            var eye = new Vector(0, 0, -1);
+            var normal = new Vector(0, 0, -1);
             var light = new PointLight(new Point(0, 0, 10), Color.WHITE);
 
             assertThat(light.lightningAt(position, material, normal, eye))

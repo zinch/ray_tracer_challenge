@@ -4,16 +4,16 @@ import org.junit.jupiter.api.Test;
 import raytracer.core.geometry.Matrix;
 import raytracer.core.geometry.Point;
 import raytracer.core.geometry.Sphere;
+import raytracer.core.geometry.Vector;
 import raytracer.core.graphics.Color;
 import raytracer.core.light.Material;
 import raytracer.core.light.PointLight;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static raytracer.core.geometry.Tuple.vector;
 
 class WorldTest {
 
-    private final Ray ray = new Ray(new Point(0, 0, -5), vector(0, 0, 1));
+    private final Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 
     @Test
     void the_default_world() {
@@ -65,7 +65,7 @@ class WorldTest {
     void shading_an_intersection_from_the_inside() {
         var light = new PointLight(new Point(0, 0.25, 0), new Color(1, 1, 1));
         var world = World.DEFAULT.withLight(light);
-        var ray = new Ray(new Point(0, 0, 0), vector(0, 0, 1));
+        var ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
         var xs = ray.intersect(world);
         var intersection = xs.get(2);
         var comps = intersection.prepareComputations();

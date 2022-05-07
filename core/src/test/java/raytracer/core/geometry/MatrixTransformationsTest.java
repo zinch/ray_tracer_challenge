@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static raytracer.core.geometry.Matrix.*;
-import static raytracer.core.geometry.Tuple.vector;
 
 public class MatrixTransformationsTest {
     private final Matrix translation = translation(5, -3, 2);
@@ -27,8 +26,8 @@ public class MatrixTransformationsTest {
 
     @Test
     void translation_does_not_affect_vectors() {
-        var v = vector(-3, 4, 5);
-        assertThat(translation.times(v)).isEqualTo(vector(-3, 4, 5));
+        var v = new Vector(-3, 4, 5);
+        assertThat(translation.times(v)).isEqualTo(new Vector(-3, 4, 5));
     }
 
     @Test
@@ -39,15 +38,15 @@ public class MatrixTransformationsTest {
 
     @Test
     void applying_a_scaling_matrix_to_a_vector() {
-        var v = vector(-4, 6, 8);
-        assertThat(scaling.times(v)).isEqualTo(vector(-8, 18, 32));
+        var v = new Vector(-4, 6, 8);
+        assertThat(scaling.times(v)).isEqualTo(new Vector(-8, 18, 32));
     }
 
     @Test
     void multiplying_by_the_inverse_of_a_scaling_matrix() {
         var inv = scaling.inverse();
-        var v = vector(-4, 6, 8);
-        assertThat(inv.times(v)).isEqualTo(vector(-2, 2, 2));
+        var v = new Vector(-4, 6, 8);
+        assertThat(inv.times(v)).isEqualTo(new Vector(-2, 2, 2));
     }
 
     @Test
