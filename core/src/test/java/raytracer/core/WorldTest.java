@@ -74,4 +74,32 @@ class WorldTest {
         var comps = intersection.prepareComputations();
         assertThat(world.shadeHit(comps)).isEqualTo(new Color(0.90498, 0.90498, 0.90498));
     }
+
+    @Test
+    void the_color_when_a_ray_misses() {
+        var ray = new Ray(new Point(0, 0, -5), new Vector(0, 1, 0));
+        assertThat(World.DEFAULT.colorAt(ray)).isEqualTo(Color.BLACK);
+    }
+
+    @Test
+    void the_color_when_a_ray_hits() {
+        assertThat(World.DEFAULT.colorAt(ray)).isEqualTo(new Color(0.38066, 0.47583, 0.2855));
+    }
+
+    @Test
+    void the_color_with_an_intersection_behind_the_ray() {
+        var firstSphere = (Sphere) World.DEFAULT.objects().get(0);
+        var secondSphere = (Sphere) World.DEFAULT.objects().get(1);
+
+        var lightedFirstSphere = firstSphere.withMaterial(
+                Material.builder(firstSphere.material()).ambient(1).build());
+        var lightedSecondSphere = secondSphere.withMaterial(
+                Material.builder(secondSphere.material()).ambient(1).build());
+
+        var objects = List.of(lightedFirstSphere, lightedSecondSphere);
+        var world = World.DEFAULT.withObjects(objects);
+
+        var ray = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1));
+        assertThat(world.colorAt(ray)).isEqualTo(secondSphere.material().color());
+    }
 }

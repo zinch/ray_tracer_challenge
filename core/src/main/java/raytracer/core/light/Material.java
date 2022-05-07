@@ -64,6 +64,16 @@ public class Material {
         return new MaterialBuilder();
     }
 
+    public static MaterialBuilder builder(Material material) {
+        var builder = new MaterialBuilder();
+        builder.color = material.color;
+        builder.ambient = material.ambient;
+        builder.diffuse = material.diffuse;
+        builder.specular = material.specular;
+        builder.shininess = material.shininess;
+        return builder;
+    }
+
     public Color color() {
         return color;
     }

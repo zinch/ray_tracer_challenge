@@ -38,6 +38,10 @@ public class World {
         return objects;
     }
 
+    public World withObjects(List<? extends Shape3d> objects) {
+        return new World(lights, objects);
+    }
+
     public List<PointLight> lights() {
         return lights;
     }
@@ -52,5 +56,13 @@ public class World {
             color = color.plus(light.lightningAt(cs.point(), cs.object().material(), cs.normalVector(), cs.eyeVector()));
         }
         return color;
+    }
+
+    public Color colorAt(Ray ray) {
+        var xs = ray.intersect(this);
+        return xs.hit()
+                .map(Ray.Intersection::prepareComputations)
+                .map(this::shadeHit)
+                .orElse(Color.BLACK);
     }
 }
