@@ -153,6 +153,30 @@ class RayTest {
             var hit = xs.hit();
             assertThat(hit).contains(i4);
         }
+
+        @Test
+        void when_an_intersection_occurs_on_the_outside() {
+            var shape = new Sphere();
+            var intersection = new Ray.Intersection(ray, 4, shape);
+
+            var comps = intersection.prepareComputations();
+
+            assertThat(comps.inside()).isFalse();
+        }
+
+        @Test
+        void when_an_intersection_occurs_on_the_inside() {
+            var ray = new Ray(point(0, 0, 0), vector(0, 0, 1));
+            var shape = new Sphere();
+            var intersection = new Ray.Intersection(ray, 1, shape);
+
+            var comps = intersection.prepareComputations();
+
+            assertThat(comps.point()).isEqualTo(point(0, 0, 1));
+            assertThat(comps.eyeVector()).isEqualTo(vector(0, 0, -1));
+            assertThat(comps.normalVector()).isEqualTo(vector(0, 0, -1));
+            assertThat(comps.inside()).isTrue();
+        }
     }
 
     @Test
@@ -175,7 +199,6 @@ class RayTest {
 
     @Test
     void intersecting_a_scaled_sphere_with_a_ray() {
-        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
         var sphere = new Sphere(scaling(2, 2, 2));
 
         var xs = ray.intersect(sphere);
@@ -187,7 +210,6 @@ class RayTest {
 
     @Test
     void intersecting_a_translated_sphere_with_a_ray() {
-        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
         var sphere = new Sphere(translation(5, 0, 0));
 
         var xs = ray.intersect(sphere);
@@ -197,7 +219,6 @@ class RayTest {
 
     @Test
     void precomputing_the_state_of_an_intersection() {
-        var ray = new Ray(point(0, 0, -5), vector(0, 0, 1));
         var shape = new Sphere();
         var intersection = new Ray.Intersection(ray, 4, shape);
 

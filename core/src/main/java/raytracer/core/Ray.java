@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public record Ray(Point origin, Vector direction) {
 
-    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector) {
+    public record Computations(double t, Shape3d object, Point point, Vector eyeVector, Vector normalVector,
+                               boolean inside) {
     }
 
     public static final class Intersection {
@@ -36,7 +37,10 @@ public record Ray(Point origin, Vector direction) {
             var point = ray.positionAt(t);
             var eyeVector = ray.direction.negate();
             var normalVector = object.normalAt(point);
-            return new Computations(t, object, point, eyeVector, normalVector);
+            var inside = normalVector.dot(eyeVector) < 0;
+
+            return new Computations(t, object, point, eyeVector,
+                    inside ? normalVector.negate() : normalVector, inside);
         }
     }
 
